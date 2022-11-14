@@ -81,8 +81,7 @@ color: #fff !important; width: 100%;     min-height: calc(1.5em + 1.65rem + 3px)
 	<img alt="Logo" src="assets/media/svg/brand-logos/google-icon.svg" class="h-20px me-3" />Google</a>
 	<a type="button" class="btn btn-light-primary fw-bolder  mb-5">
 		<img alt="Logo" src="assets/media/svg/brand-logos/facebook-3.svg" class="h-20px me-3" />Facebook</a>
-		<a type="button" class="btn btn-light-primary fw-bolder  mb-5">
-			<img alt="Logo" src="assets/media/svg/brand-logos/linkedin-1.svg" class="h-20px me-3" />Linkedin</a>
+		
 		</div>
 		<!--end::Action-->
 		<!--begin::Separator-->
