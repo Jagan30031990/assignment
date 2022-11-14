@@ -1,0 +1,120 @@
+.common_btn_one{
+  background: #182e65;
+    color: #fff;
+}
+.common_btn_one:hover{
+    background: #ffc001;
+    color: #000;
+}
+
+
+.log_out_box{
+	position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-top: 1px solid #a995de;
+    padding: 13px 10px;
+    background: #fff;
+
+}
+.log_out_box .menu-item .menu-link{
+justify-content: center;
+color: #000;
+}
+.log_out_box .menu-item .menu-link .menu-icon{
+	margin-left: 10px;
+	color: #fff;
+}
+
+/*======================dashboard_container================*/
+.dashboard_container{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+}
+.p_0_box_ .card-body{
+/*padding: 0 !important;*/
+background: #f1f1f1;
+    border-radius: 10px;
+}
+.p_0_box_ .card-body .fs-7{
+font-size: 20px !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+}
+.flex-column-fluid{
+	flex: auto;
+}
+
+.table th, .table td{
+font-size: 13px;
+padding-right: 0 !important;	
+}
+.table td{
+font-size: 13px;	
+}
+
+.table_btn{
+	padding: 5px 8px !important;
+    margin: 0 !important;
+    font-size: 12px;
+    height: auto !important;
+}
+.modal-body-change .close_btn{
+position: absolute;
+    right: -15px;
+    top: -15px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.modal-body-change .close_btn span{
+
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+}
+.modal-body-change form h1{
+	text-align: center;
+    font-size: 25px;
+    text-transform: capitalize;
+    padding: 15px 0 15px;
+}
+
+.font_15px{
+       color: #182e65 !important;
+    font-size: 15px;
+}
+.my_work_link{
+     color: #182e65 !important;
+     text-decoration: underline !important;
+}
+.search_box{
+position: relative;
+}
+.search_box .search_i{
+ border: none;
+    outline: none;
+    background: #182e65;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    border-top-right-radius: 0.475rem;
+    border-bottom-right-radius: 0.475rem;   
+}
+@media (min-width: 576px){
+.modal-dialog-centered700px{
+    max-width: 700px !important;
+    margin: 1.75rem auto;
+}
+
+}

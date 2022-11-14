@@ -1,0 +1,154 @@
+.common_btn_one{
+  background: #182e65;
+    color: #fff;
+}
+.common_btn_one:hover{
+    background: #ffc001;
+    color: #000;
+}
+
+
+.log_out_box{
+	position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-top: 1px solid #a995de;
+    padding: 13px 10px;
+    background: #fff;
+
+}
+.log_out_box .menu-item .menu-link{
+justify-content: center;
+color: #000;
+}
+.log_out_box .menu-item .menu-link .menu-icon{
+	margin-left: 10px;
+	color: #fff;
+}
+
+/*======================dashboard_container================*/
+.dashboard_container{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+}
+.p_0_box_ .card-body{
+/*padding: 0 !important;*/
+background: #f1f1f1;
+    border-radius: 10px;
+}
+.p_0_box_ .card-body .fs-7{
+font-size: 20px !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+}
+.flex-column-fluid{
+	flex: auto;
+}
+
+.table th, .table td{
+font-size: 13px;
+padding-right: 0 !important;	
+}
+.table td{
+font-size: 13px;	
+}
+
+.table_btn{
+	padding: 5px 8px !important;
+    margin: 0 !important;
+    font-size: 12px;
+    height: auto !important;
+}
+.modal-body-change .close_btn{
+position: absolute;
+    right: -15px;
+    top: -15px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.modal-body-change .close_btn span{
+
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+}
+.modal-body-change form h1{
+	text-align: center;
+    font-size: 25px;
+    text-transform: capitalize;
+    padding: 15px 0 15px;
+}
+
+.font_15px{
+       color: #182e65 !important;
+    font-size: 15px;
+}
+.my_work_link{
+     color: #182e65 !important;
+     text-decoration: underline !important;
+}
+.search_box{
+position: relative;
+    margin-right: 0;
+}
+.search_box .search_i{
+ padding: 5px;
+    border: none;
+    outline: none;
+    background: #182e65;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: auto;
+    border-top-right-radius: 0.475rem;
+    border-bottom-right-radius: 0.475rem;  
+}
+.search_box input{
+   padding: 6px;
+    background: #fff !important;
+    height: 100%;
+}
+.filter_section{
+justify-content: center;
+    flex-wrap: wrap;
+}
+.filter_section .fv-row{
+width: 230px;
+  margin: 5px 5px;
+}
+.filter_section .fv-row .form-control{
+padding: 5px;
+}
+.filter_section .fv-row .form-select{
+
+}
+.card-body-n{
+    background: #F5F8FA;
+    border-radius: 10px;
+}
+.card-body-n .table.table-row-dashed tr {
+    border-bottom-color: #fff !important;
+}
+@media (min-width: 576px){
+.modal-dialog-centered700px{
+    max-width: 700px !important;
+    margin: 1.75rem auto;
+}
+
+}
+
+@media(max-width: 600px){
+    .modal-body-change .close_btn{
+    right: 30px;
+}
+}
