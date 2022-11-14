@@ -1,0 +1,52 @@
+body{
+	/*background-image: url('https://preview.keenthemes.com/metronic8/demo1/assets/media/auth/bg10.jpeg') !important;*/
+}
+.left_side_div{
+	  border-right: 5px solid #ffc001;
+    background: #182e65;
+}
+.btn.btn-light-primary:hover:not(.btn-active){
+	 background: #182e65 !important;
+}
+.media_ic_box{
+	display: flex;
+	align-items: center;
+}
+.media_ic_box a:first-child{
+	margin: 0;
+}
+
+.media_ic_box a{
+	margin: 0 5px;
+	width: 100%;
+}
+.common_btn{
+    /*padding: 8px 20px !important;*/
+}
+.flex-root-a{
+	height: 100vh;
+}
+
+@media(max-width: 768px){
+	.bgi-no-repeat-auth{
+	margin-bottom: 50px;
+}
+.media_ic_box button{
+	margin: 0 5px;
+	max-width: 100%;
+}
+.auth_form{
+	width: 80%;
+}
+.bgi-no-repeat-auth{
+margin-bottom: 50px;	
+}
+}
+.common_btn_one{
+  background: #182e65;
+    color: #fff;
+}
+.common_btn_one:hover{
+	background: #ffc001;
+	color: #000;
+}
