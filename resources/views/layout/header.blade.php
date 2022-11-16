@@ -1,4 +1,5 @@
 <!--begin::Header-->
+
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 					<div id="kt_header" style="" class="header align-items-stretch">
 						<!--begin::Container-->

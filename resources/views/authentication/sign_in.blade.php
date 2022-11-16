@@ -8,7 +8,12 @@
 <link href="{{asset('assets/css/auth.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
-
+<style>
+	.error
+{
+	color: red !important;
+}
+</style>
 </head>
 
 <body id="kt_body" class="bg-body">
@@ -52,7 +57,7 @@
 <div class="w-lg-600px auth_form p-10 p-lg-15 mx-auto">
 	<!--begin::Form-->
 
-	<form action="{{route('admin.chklogin')}}" method="POST">
+	<form id="ajax-contact-form" action="javascript:void(0)" method="POST">
 		@csrf
 		<!--begin::Heading-->
 		<div class="text-center mb-10">
@@ -97,7 +102,7 @@
 			<!--begin::Actions-->
 			<div class="text-center">
 				<!--begin::Submit button-->
-				<button type="submit" id="kt_sign_in_submit" class="btn btn-lg common_btn_one w-100 mb-5">
+				<button type="submit" id="submit" class="btn btn-lg common_btn_one w-100 mb-5">
 					<span class="indicator-label">Sign In</span>
 					<span class="indicator-progress">Please wait...
 						<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -147,3 +152,66 @@
 	<!--end::Page Custom Javascript-->
 </body>
 </html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script>
+if ($("#ajax-contact-form").length > 0) {
+$("#ajax-contact-form").validate({
+	rules: {
+		email: {
+			required: true,
+			maxlength: 50,
+			email: true,
+		},
+		password: {
+			required: true,
+		},
+		
+	},
+	messages: {
+		email: {
+		    required: "Please enter valid email",
+			email: "Please enter valid email",
+			maxlength: "The email name should less than or equal to 50 characters",
+		},
+		password: {
+			required: "Please enter valid password",
+		},
+	},
+	submitHandler: function(form) {
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+		$('#submit').html('Please Wait...');
+		$("#submit"). attr("disabled", true);
+		$.ajax({
+			url: "{{url('chklogin')}}",
+			type: "POST",
+			data: $('#ajax-contact-form').serialize(),
+			success: function( data ) {
+				console.log(data);
+				if($.trim(data['success']) =='false')
+				{
+					toastr.error("Login Failed!! Please Login with valid credentials");
+					$("#submit"). attr("disabled", false);
+					$('#submit').html('Sign In');
+					return false;
+				}
+				else
+				{				
+					toastr.success('LogIn successfully');
+					$('#submit').html('...Redirecting...');	
+					$("#submit"). attr("disabled", true);
+					setTimeout(function () {	
+						$('#submit').html('Please Wait...redirecting');	
+						$("#submit"). attr("disabled", true);				
+						window.location.href = '/admin/home-page';
+					}, 5000);
+				}
+			}
+		});
+	}
+})
+}
+</script>

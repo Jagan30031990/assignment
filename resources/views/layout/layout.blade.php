@@ -24,6 +24,7 @@ License: For each use you must have a valid license purchased only from above li
         <meta property="og:url" content="" />
         <meta property="og:site_name" content="" />
         <link rel="canonical" href="" />
+        
         <link rel="shortcut icon" href="assets/images/favicon.png" />
         <!--begin::Fonts-->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
