@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use Auth;
 use DB;
 use Captcha;
+use App\Models\ExportIndia;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class LoginController extends Controller
     }
     public function home_page()
     {
-        return view('index');
+        $export_india = ExportIndia::paginate(10);  
+        return view('index', compact('export_india'));
     }
     public function refresh_captcha()
     {
@@ -38,13 +40,18 @@ class LoginController extends Controller
         if(Auth::attempt($user_data))
         {
             Toastr::success('Successfully Login');
-            return redirect('/admin/home-page');
+            return response()->json(['success' => true]);
         }
         else
         {
-            Toastr::error('Please Provide Valid Credentials');
-            return redirect('/');
+            return response()->json(['success' => false]);
         }
+    }
+
+    public function export_india()
+    {
+        $export_india = ExportIndia::paginate(100);  
+        return view('index', compact('export_india'));
     }
 
     function logout()

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\SocialiteAuthController;
+use App\Http\Controllers\ExportIndiaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,7 @@ Route::get('/auth/google-callback', [SocialiteAuthController::class, 'loginWithG
 
 Route::get('/refresh_captcha', [LoginController::class, 'refresh_captcha'])->name('users.captcha');
 Route::get('/', [LoginController::class, 'index'])->name('admin.login');
+Route::get('/export_india', [ExportIndiaController::class, 'show'])->name('users.export');
 Route::post('chklogin', [LoginController::class, 'chklogin'])->name('admin.chklogin');
 Route::get('/logout', [LoginController::class, 'logout'])->name('admin.logout');
 Route::post('/store', [SignupController::class, 'register'])->name('user.register');
