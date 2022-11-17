@@ -287,91 +287,7 @@
 						<div class="table-responsive">
 							<!--begin::Table-->
 
-						<!-- 	<table id="example" class="table table-row-bordered table-row-dashed gy-4 align-middle fw-bolder">
-								
-						<--	<thead class="fs-7 text-gray-400 text-uppercase">
-									<tr>
-										<th>Data Type</th>
-										<th>Country</th>
-										<th>Consignment Type</th>
-										<th>Consignment Period</th>
-										<th>Shipment Month</th>
-										<th>Port Of Loading</th>
-										<th>Mode Of Shipment</th>
-										<th>Port Code</th>
-										<th class="min-w-50px ">Sbill No</th>
-										<th>Sbill Date</th>
-										<th>HS Code</th>
-										<th>Product Description</th>
-										<th>Quantity</th>
-										<th>UQC</th>
-										<th>Invoice Unit Rate FC</th>
-										<th>Invoice Currency</th>
-										<th>Unit Value INR</th>
-										<th>Total Fob INR</th>
-										<th>Invoice No</th>
-										<th>Port Code Discharge</th>
-										<th>Port Code Discharge</th>
-										<th>Country Destination</th>
-										<th>Consignee ID</th>
-										<th>Consignee Name</th>
-										<th>Consignee Address</th>
-										<th>Consignee Country</th>
-										<th>CHA Code								</th>
-										<th>CHA Name								</th>
-										<th>IEC</th>
-										<th>Exporter Name</th>
-									</tr>
-								</thead> -->
-								<!--end::Head-->
-								<!--begin::Body-->
-								<!-- <tbody class="fs-6">
-									@if(!empty($export_india) && $export_india->count())
-									@foreach($export_india as $key => $value)
-									<tr>
-										<td>{{$value->data_type}}</td>
-										<td>{{$value->country}}</td>
-										<td>{{$value->consignment_type}}</td>
-										<td>{{$value->consignment_period}}</td>
-										<td>{{$value->shipment_month}}</td>
-										<td>{{$value->port_of_loading}}</td>
-										<td>{{$value->mode_of_shipment}}</td>
-										<td>{{$value->port_code}}</td>
-										<td>{{$value->sbill_no}}</td>
-										<td>{{$value->sbill_date}}</td>
-										<td>{{$value->shipment_id}}</td>
-										<td>{{$value->shipment_date}}</td>
-										<td>{{$value->hs_code}}</td>
-										<td>{{$value->product_description}}</td>
-										<td>{{$value->quantity}}</td>
-										<td>{{$value->uqc}}</td>
-										<td>{{$value->invoice_unit_rate_fc}}</td>
-										<td>{{$value->invoice_currency}}</td>
-										<td>{{$value->unit_value_inr}}</td>
-										<td>{{$value->total_fob_value_inr}}</td>
-										<td>{{$value->invoice_no}}</td>
-										<td>{{$value->port_code_discharge}}</td>
-										<td>{{$value->country_destination}}</td>
-										<td>{{$value->consignee_id}}</td>
-										<td>{{$value->consignee_name}}</td>
-										<td>{{$value->consignee_address}}</td>
-										<td>{{$value->consignee_country}}</td>
-										<td>{{$value->cha_code}}</td>
-										<td>{{$value->cha_name}}</td>
-										<td>{{$value->iec}}</td>
-										<td>{{$value->exporter_name}}</td>
-
-									</tr>
-									@endforeach
-									@else
-									<tr>
-										<td colspan="32">No Data Found!!</td>
-									</tr>
-									@endif
-
-								</tbody> -->
-								<!--end::Body-->
-								<!-- </table> -->
+						
 								<style>
 									.dt-more-container {
 										text-align:center;
@@ -384,10 +300,37 @@
 								<table id="example" class="display" cellspacing="0" width="100%">
 									<thead>
 										<tr>
-											<th>Name</th>
-											<th>Position</th>
-											
-
+											<th>ID</th>
+											<th>Data Type</th>
+											<th>Country</th>
+											<th>Consignment Type</th>
+											<th>Consignment Period</th>
+											<th>Shipment Month</th>
+											<th>Port Of Loading</th>
+											<th>Mode Of Shipment</th>
+											<th>Port Code</th>
+											<th>Sbill No</th>
+											<th>Sbill Date</th>
+											<th>HS Code</th>
+											<th>Product Description</th>
+											<th>Quantity</th>
+											<th>UQC</th>
+											<th>Invoice Unit Rate FC</th>
+											<th>Invoice Currency</th>
+											<th>Unit Value INR</th>
+											<th>Total Fob INR</th>
+											<th>Invoice No</th>
+											<th>Port Code Discharge</th>
+											<th>Port Code Discharge</th>
+											<th>Country Destination</th>
+											<th>Consignee ID</th>
+											<th>Consignee Name</th>
+											<th>Consignee Address</th>
+											<th>Consignee Country</th>
+											<th>CHA Code</th>
+											<th>CHA Name</th>
+											<th>IEC</th>
+											<th>Exporter Name</th>
 										</tr>
 									</thead>
 								</table>
@@ -416,28 +359,49 @@
 						ajax: "{{route('admin.index')}}",
 						columns: [
 							{ "data": "id" },
-							{ "data": "data_type" }
+							{ "data": "data_type" },
+							{ "data": "country" },
+							{ "data": "consignment_type" },
+							{ "data": "consignment_period" },
+							{ "data": "shipment_month" },
+							{ "data": "port_of_loading" },
+							{ "data": "port_code" },
+							{ "data": "sbill_no" },
+							{ "data": "sbill_date" },
+							{ "data": "shipment_id" },
+							{ "data": "shipment_date" },
+							{ "data": "hs_code" },
+							{ "data": "product_description" },
+							{ "data": "quantity" },
+							{ "data": "uqc" },
+							{ "data": "invoice_unit_rate_fc" },
+							{ "data": "invoice_currency" },
+							{ "data": "unit_value_inr" },
+							{ "data": "total_fob_value_inr" },
+							{ "data": "invoice_no" },
+							{ "data": "port_code_discharge" },
+							{ "data": "country_destination" },
+							{ "data": "consignee_id" },
+							{ "data": "consignee_name" },
+							{ "data": "consignee_address" },
+							{ "data": "consignee_country" },
+							{ "data": "cha_code" },
+							{ "data": "cha_name" },
+							{ "data": "iec" },
+							{ "data": "exporter_name" },
 							],
 						drawCallback: function(){
-         // If there is some more data
 							if($('#btn-example-load-more').is(':visible')){
-            // Scroll to the "Load more" button
 								$('html, body').animate({
 									scrollTop: $('#btn-example-load-more').offset().top
 								}, 1000);
 							}
-
-         // Show or hide "Load more" button based on whether there is more data available
 							$('#btn-example-load-more').toggle(this.api().page.hasMore());
 						}      
 					});
-					
-   // Handle click on "Load more" button
-					$('#btn-example-load-more').on('click', function(){  
-      // Load more data
+					$('#btn-example-load-more').on('click', function(){
 						table.page.loadMore();
 					});
 				});
-			</script>
-			
+			</script>			
 			@endsection

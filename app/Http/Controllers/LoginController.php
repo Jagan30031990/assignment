@@ -16,9 +16,8 @@ class LoginController extends Controller
     }
     public function home_page(Request $request)
     {
-    ini_set('memory_limit', '-1');
        if ($request->ajax()) {
-            $customers = DB::SELECT("SELECT id,data_type from mst_export_india limit 2000");
+            $customers = DB::SELECT("SELECT * from mst_export_india limit 2000");
             return datatables()->of($customers)
                 ->addColumn('action', function ($row) {
                     $html = '<a href="#" class="btn btn-xs btn-secondary btn-edit">Edit</a> ';
