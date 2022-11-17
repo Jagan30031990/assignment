@@ -31,8 +31,8 @@
 					<!--end::Input group-->
 					<!--begin:Action-->
 					<div class="d-flex align-items-center">
-						<button type="submit" class="btn btn-primary me-5">Search</button>
-						<a id="kt_horizontal_search_advanced_link" class="btn btn-link" data-bs-toggle="collapse" href="#kt_advanced_search_form">Advanced Search</a>
+						<button type="submit" class="btn common_btn_one me-5">Search</button>
+						<a id="kt_horizontal_search_advanced_link" class="btn common_btn_one" data-bs-toggle="collapse" href="#kt_advanced_search_form">Advanced Search</a>
 					</div>
 					<!--end:Action-->
 				</div>

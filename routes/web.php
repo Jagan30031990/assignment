@@ -56,3 +56,7 @@ Route::view('/shared-workspaces', 'webViews.shared_workspaces')->name('webViews.
 Route::view('/delete-workspaces', 'webViews.workspace_trash')->name('webViews.workspace_trash');
 Route::view('/database-updates', 'webViews.database_updates')->name('webViews.database_updates');
 Route::view('/system-generated', 'webViews.system_generated')->name('webViews.system_generated');
+
+
+/*Home tabs link*/
+Route::view('/global-search', 'webViews.global_search')->name('webViews.global_search');
