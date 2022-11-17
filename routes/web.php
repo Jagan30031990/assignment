@@ -24,9 +24,11 @@ Route::get('/', function () {
 //admin page
 Route::prefix('admin')->middleware(['authenticated'])->group(function(){
 
-Route::get('/home-page', [LoginController::class, 'home_page']);
+Route::get('/home-page', [LoginController::class, 'home_page'])->name('admin.index');
 
 });
+
+Route::get('/morePosts', [LoginController::class, 'morePosts'])->name('users.morePosts');
 
 Route::get('google', [SocialiteAuthController::class, 'googleRedirect'])->name('auth/google');
 Route::get('/auth/google-callback', [SocialiteAuthController::class, 'loginWithGoogle']);
