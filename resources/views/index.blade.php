@@ -1,6 +1,10 @@
 @extends('layout.layout') @section('title','Exim Pulse')
 @section('content')
-<!--begin::Container-->
+
+             
+			  
+
+			  <!--begin::Container-->
 <div id="kt_content_container" class="container-xxl">
 	<!--begin::Form-->
 	<form action="#">
@@ -8,6 +12,7 @@
 		<div class="card mb-7">
 			<!--begin::Card body-->
 			<div class="card-body">
+				
 				<!--begin::Compact form-->
 				<div class="d-flex align-items-center">
 					<!--begin::Input group-->
@@ -20,7 +25,8 @@
 							</svg>
 						</span>
 						<!--end::Svg Icon-->
-						<input type="text" class="form-control form-control-solid ps-10" name="search" value="" placeholder="Search" />
+						<input type="text" class="form-control form-control-solid ps-10" data-kt-repeater="tagify" value="tag1, tag2, tag3" value="" placeholder="Search" />
+					
 					</div>
 					<!--end::Input group-->
 					<!--begin:Action-->
@@ -39,10 +45,7 @@
 					<!--begin::Row-->
 					<div class="row g-8 mb-8">
 						<!--begin::Col-->
-						<div class="col-xxl-7">
-							<label class="fs-6 form-label fw-bolder text-dark">Tags</label>
-							<input type="text" class="form-control form-control form-control-solid" name="tags" value="products, users, events" />
-						</div>
+						
 						<!--end::Col-->
 						<!--begin::Col-->
 						<div class="col-xxl-5">
@@ -284,7 +287,7 @@
 					<!--begin::Card body-->
 					<div class="card-body pt-0">
 						<!--begin::Table container-->
-						<div class="table-responsive">
+						<div class="table-responsive table-responsive-common">
 							<!--begin::Table-->
 
 						
@@ -297,51 +300,52 @@
 
 								
 
-								<table id="example" class="display" cellspacing="0" width="100%">
-									<thead>
+								<table id="example" class="table table-row-bordered table-row-dashed gy-4 align-middle fw-bolder" style="border: none !important;" cellspacing="0" width="100%">
+									<thead class="fs-7 text-gray-400 text-uppercase">
 										<tr>
-											<th>ID</th>
-											<th>Data Type</th>
-											<th>Country</th>
-											<th>Consignment Type</th>
-											<th>Consignment Period</th>
-											<th>Shipment Month</th>
-											<th>Port Of Loading</th>
-											<th>Mode Of Shipment</th>
-											<th>Port Code</th>
-											<th>Sbill No</th>
-											<th>Sbill Date</th>
-											<th>HS Code</th>
-											<th>Product Description</th>
-											<th>Quantity</th>
-											<th>UQC</th>
-											<th>Invoice Unit Rate FC</th>
-											<th>Invoice Currency</th>
-											<th>Unit Value INR</th>
-											<th>Total Fob INR</th>
-											<th>Invoice No</th>
-											<th>Port Code Discharge</th>
-											<th>Port Code Discharge</th>
-											<th>Country Destination</th>
-											<th>Consignee ID</th>
-											<th>Consignee Name</th>
-											<th>Consignee Address</th>
-											<th>Consignee Country</th>
-											<th>CHA Code</th>
-											<th>CHA Name</th>
-											<th>IEC</th>
-											<th>Exporter Name</th>
+											<th class="min-w-50px">ID</th>
+											<th class="min-w-150px">Data Type</th>
+											<th class="min-w-150px">Country</th>
+											<th class="min-w-200px">Consignment Type</th>
+											<th class="min-w-200px">Consignment Period</th>
+											<th class="min-w-200px">Shipment Month</th>
+											<th class="min-w-200px">Port Of Loading</th>
+											<th class="min-w-200px">Mode Of Shipment</th>
+											<th class="min-w-150px">Port Code</th>
+											<th class="min-w-100px">Sbill No</th>
+											<th class="min-w-150px">Sbill Date</th>
+											<th class="min-w-100px">HS Code</th>
+											<th class="min-w-200px">Product Description</th>
+											<th class="min-w-250px">Quantity</th>
+											<th class="min-w-50px">UQC</th>
+											<th class="min-w-200px">Invoice Unit Rate FC</th>
+											<th class="min-w-200px">Invoice Currency</th>
+											<th class="min-w-150px">Unit Value INR</th>
+											<th class="min-w-150px">Total Fob INR</th>
+											<th class="min-w-150px">Invoice No</th>
+											<th class="min-w-250px">Port Code Discharge</th>
+											<th class="min-w-250px">Port Code Discharge</th>
+											<th class="min-w-250px">Country Destination</th>
+											<th class="min-w-250px">Consignee ID</th>
+											<th class="min-w-250px">Consignee Name</th>
+											<th class="min-w-250px">Consignee Address</th>
+											<th class="min-w-250px">Consignee Country</th>
+											<th class="min-w-100px">CHA Code</th>
+											<th class="min-w-150px">CHA Name</th>
+											<th class="min-w-150px">IEC</th>
+											<th class="min-w-250px">Exporter Name</th>
 										</tr>
 									</thead>
 								</table>
 
-								<div class="dt-more-container">
-									<button id="btn-example-load-more" style="display:none">Load More</button>
-								</div>
+								
 
 
 							</div>
 							<!--end::Table container-->
+							<div class="dt-more-container">
+									<button id="btn-example-load-more" class="btn common_btn_one" style="display:none">Load More</button>
+								</div>
 						</div>
 						<!--end::Card body-->
 						<!--end::Card-->
@@ -403,5 +407,6 @@
 						table.page.loadMore();
 					});
 				});
-			</script>			
-			@endsection
+			</script>
+			
+@endsection

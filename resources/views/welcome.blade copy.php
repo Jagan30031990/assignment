@@ -41,8 +41,8 @@ License: For each use you must have a valid license purchased only from above li
             <!--begin::Page-->
             <div class="page d-flex flex-row flex-column-fluid">
                 <!--begin::Aside-->
-                @section('aside')
-                @include('layout.aside')
+                @section('aside0')
+                @include('layout.aside0')
                 @show
                 <!--end::Aside-->
                 <!--begin::Wrapper-->
@@ -61,15 +61,9 @@ License: For each use you must have a valid license purchased only from above li
                         <!--end::Toolbar-->
                         <!--begin::Post-->
                         <div class="post d-flex flex-column-fluid" id="kt_post">
-                        <div class="form-group row mb-5">
-                  
-                  
-                        <div class="col-md-4">
-                            <label class="form-label">Tags:</label>
-                            <input class="form-control" data-kt-repeater="tagify" value="tag1, tag2, tag3"/>
-                        </div>
-                        
-                    </div>
+                            <!--begin::Container-->
+                             @yield('content')
+                            <!--end::Container-->
                         </div>
                         <!--end::Post-->
                     </div>
@@ -89,24 +83,9 @@ License: For each use you must have a valid license purchased only from above li
     
         <!--end::Modal - Invite Friend-->
         <!--end::Modals-->
-       @section('script')
-@include('layout.script')
+       @section('script0')
+@include('layout.script0')
 @show
-<script>
-   function myF(){
-    new Tagify(document.querySelector('[data-kt-repeater="tagify"]'), {
-			whitelist: ["Important", "Urgent", "High", "Medium", "Low"],
-			maxTags: 5,
-			dropdown: {
-				maxItems: 10,           // <- mixumum allowed rendered suggestions
-				enabled: 0,             // <- show suggestions on focus
-				closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
-			}
-		});
-    
-   }
-   myF();
-</script>
     </body>
     <!--end::Body-->
 </html>
