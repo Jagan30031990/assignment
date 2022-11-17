@@ -55,3 +55,19 @@
    }
    myF();
 </script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/easy-pie-chart/2.1.6/jquery.easypiechart.min.js" integrity="sha512-DHNepbIus9t4e6YoMBSJLwl+nnm0tIwMBonsQQ+W9NKN6gVVVbomJs9Ii3mQ+HzGZiU5FyJLdnAz9a63ZgZvTQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('.chart').easyPieChart({
+                size: 160,
+                barColor: "#182e65",
+                scaleLength: 0,
+                lineWidth: 15,
+                trackColor: "#ffc001",
+                lineCap: "circle",
+                animate: 2000,
+            });
+        });
+    </script>

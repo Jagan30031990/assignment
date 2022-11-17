@@ -60,3 +60,5 @@ Route::view('/system-generated', 'webViews.system_generated')->name('webViews.sy
 
 /*Home tabs link*/
 Route::view('/global-search', 'webViews.global_search')->name('webViews.global_search');
+Route::view('/advance-search', 'webViews.advance_search')->name('webViews.advance_search');
+Route::view('/hot-products', 'webViews.hot_products')->name('webViews.hot_products');

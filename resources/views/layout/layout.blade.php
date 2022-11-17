@@ -88,6 +88,8 @@ License: For each use you must have a valid license purchased only from above li
 @include('layout.script')
 @show
 {!!Toastr::message()!!}
+
+
     </body>
     <!--end::Body-->
 </html>
