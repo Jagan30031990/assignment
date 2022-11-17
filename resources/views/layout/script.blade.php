@@ -36,3 +36,5 @@
 		
 
 
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.js"></script>
+<script type="text/javascript" src="https://gyrocode.github.io/jquery-datatables-pageLoadMore/1.0.2/js/dataTables.pageLoadMore.min.js"></script>

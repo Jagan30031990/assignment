@@ -228,7 +228,7 @@
 	<div class="d-flex flex-wrap flex-stack pb-7">
 		<!--begin::Title-->
 		<div class="d-flex flex-wrap align-items-center my-1">
-			<h3 class="fw-bolder me-5 my-1">{{$export_india->count()}} Items Found
+			<h3 class="fw-bolder me-5 my-1">0 Items Found
 				<span class="text-gray-400 fs-6">by Recent Updates ↓</span></h3>
 			</div>
 			<!--end::Title-->
@@ -236,7 +236,7 @@
 			<div class="d-flex flex-wrap my-1">
 				<!--begin::Tab nav-->
 				<ul class="nav nav-pills me-6 mb-2 mb-sm-0">
-				
+
 					<li class="nav-item m-0">
 						<a class="btn btn-sm btn-icon btn-light btn-color-muted btn-active-primary active" data-bs-toggle="tab" href="#kt_project_users_table_pane">
 							<!--begin::Svg Icon | path: icons/duotune/abstract/abs015.svg-->
@@ -276,7 +276,7 @@
 		<!--end::Toolbar-->
 		<!--begin::Tab Content-->
 		<div class="tab-content">
-			{!! $export_india->links() !!}
+
 			<!--begin::Tab pane-->
 			<div id="kt_project_users_table_pane" class="tab-pane fade show active">
 				<!--begin::Card-->
@@ -287,45 +287,45 @@
 						<div class="table-responsive">
 							<!--begin::Table-->
 
-							<table id="kt_project_users_table" class="table table-row-bordered table-row-dashed gy-4 align-middle fw-bolder">
-								<!--begin::Head-->
-								<thead class="fs-7 text-gray-400 text-uppercase">
+						<!-- 	<table id="example" class="table table-row-bordered table-row-dashed gy-4 align-middle fw-bolder">
+								
+						<--	<thead class="fs-7 text-gray-400 text-uppercase">
 									<tr>
-										<th class="min-w-50px">Data Type</th>
-										<th class="min-w-50px">Country</th>
-										<th class="min-w-50px">Consignment Type</th>
-										<th class="min-w-50px">Consignment Period</th>
-										<th class="min-w-50px">Shipment Month</th>
-										<th class="min-w-50px">Port Of Loading</th>
-										<th class="min-w-50px">Mode Of Shipment</th>
-										<th class="min-w-50px">Port Code</th>
+										<th>Data Type</th>
+										<th>Country</th>
+										<th>Consignment Type</th>
+										<th>Consignment Period</th>
+										<th>Shipment Month</th>
+										<th>Port Of Loading</th>
+										<th>Mode Of Shipment</th>
+										<th>Port Code</th>
 										<th class="min-w-50px ">Sbill No</th>
-										<th class="min-w-50px">Sbill Date</th>
-										<th class="min-w-50px">HS Code</th>
-										<th class="min-w-50px">Product Description</th>
-										<th class="min-w-50px">Quantity</th>
-										<th class="min-w-50px">UQC</th>
-										<th class="min-w-50px">Invoice Unit Rate FC</th>
-										<th class="min-w-50px">Invoice Currency</th>
-										<th class="min-w-50px">Unit Value INR</th>
-										<th class="min-w-50px">Total Fob INR</th>
-										<th class="min-w-50px">Invoice No</th>
-										<th class="min-w-50px">Port Code Discharge</th>
-										<th class="min-w-50px">Port Code Discharge</th>
-										<th class="min-w-50px">Country Destination</th>
-										<th class="min-w-50px">Consignee ID</th>
-										<th class="min-w-50px">Consignee Name</th>
-										<th class="min-w-50px">Consignee Address</th>
-										<th class="min-w-50px">Consignee Country</th>
-										<th class="min-w-50px">CHA Code								</th>
-										<th class="min-w-50px">CHA Name								</th>
-										<th class="min-w-50px">IEC</th>
-										<th class="min-w-50px">Exporter Name</th>
+										<th>Sbill Date</th>
+										<th>HS Code</th>
+										<th>Product Description</th>
+										<th>Quantity</th>
+										<th>UQC</th>
+										<th>Invoice Unit Rate FC</th>
+										<th>Invoice Currency</th>
+										<th>Unit Value INR</th>
+										<th>Total Fob INR</th>
+										<th>Invoice No</th>
+										<th>Port Code Discharge</th>
+										<th>Port Code Discharge</th>
+										<th>Country Destination</th>
+										<th>Consignee ID</th>
+										<th>Consignee Name</th>
+										<th>Consignee Address</th>
+										<th>Consignee Country</th>
+										<th>CHA Code								</th>
+										<th>CHA Name								</th>
+										<th>IEC</th>
+										<th>Exporter Name</th>
 									</tr>
-								</thead>
+								</thead> -->
 								<!--end::Head-->
 								<!--begin::Body-->
-								<tbody class="fs-6">
+								<!-- <tbody class="fs-6">
 									@if(!empty($export_india) && $export_india->count())
 									@foreach($export_india as $key => $value)
 									<tr>
@@ -369,23 +369,75 @@
 									</tr>
 									@endif
 
-								</tbody>
+								</tbody> -->
 								<!--end::Body-->
-							</table>
-							
-							<!--end::Table-->
-						</div>
-						<!--end::Table container-->
-					</div>
-					<!--end::Card body-->
-					{!! $export_india->links() !!}
-				</div>
-				<!--end::Card-->
-			</div>
-			<!--end::Tab pane-->
-		</div>
-		<!--end::Tab Content-->
-	</div>
-	<!--end::Container-->
+								<!-- </table> -->
+								<style>
+									.dt-more-container {
+										text-align:center;
+										margin:2em 0;
+									}
+								</style>
 
-	@endsection
+								
+
+								<table id="example" class="display" cellspacing="0" width="100%">
+									<thead>
+										<tr>
+											<th>Name</th>
+											<th>Position</th>
+											
+
+										</tr>
+									</thead>
+								</table>
+
+								<div class="dt-more-container">
+									<button id="btn-example-load-more" style="display:none">Load More</button>
+								</div>
+
+
+							</div>
+							<!--end::Table container-->
+						</div>
+						<!--end::Card body-->
+						<!--end::Card-->
+					</div>
+					<!--end::Tab pane-->
+				</div>
+				<!--end::Tab Content-->
+			</div>
+			<!--end::Container-->
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+			<script type="text/javascript">
+				$(document).ready(function (){
+					var table = $('#example').DataTable({
+						dom: 'frt',
+						ajax: "{{route('admin.index')}}",
+						columns: [
+							{ "data": "id" },
+							{ "data": "data_type" }
+							],
+						drawCallback: function(){
+         // If there is some more data
+							if($('#btn-example-load-more').is(':visible')){
+            // Scroll to the "Load more" button
+								$('html, body').animate({
+									scrollTop: $('#btn-example-load-more').offset().top
+								}, 1000);
+							}
+
+         // Show or hide "Load more" button based on whether there is more data available
+							$('#btn-example-load-more').toggle(this.api().page.hasMore());
+						}      
+					});
+					
+   // Handle click on "Load more" button
+					$('#btn-example-load-more').on('click', function(){  
+      // Load more data
+						table.page.loadMore();
+					});
+				});
+			</script>
+			
+			@endsection
