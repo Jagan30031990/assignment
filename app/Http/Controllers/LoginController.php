@@ -18,27 +18,14 @@ class LoginController extends Controller
     }
     public function home_page(Request $request)
     {
-        // print_r($request->search);
-        // // die();
-        // $search_data = json_decode($request->get('search_data'));        
-        // if ($search_data == NULL || $search_data=='') {
-        //     if ($request->ajax()) {
-        //         $customers = ExportIndia::limit(2000)->get();
-        //         return datatables()->of($customers)->toJson();
-        //     }
-        // } else {
-        //     if ($request->ajax()) {
-        //         $customers = ExportIndia::where("product_description", "LIKE", "%{$search_data}%")->get();
-        //         return datatables()->of($customers)->toJson();
-        //     }
-        // }
-        // $exported_data = ExportIndia::take(23)->paginate(2);
+
         $exported_data = DB::table(function ($query) {
             $query->selectRaw('*')
             ->from('mst_export_india')
             ->orderBy('id','asc')
             ->take(2000);
         })->paginate(100);
+
         $exported_data_count = DB::table(function ($query) {
             $query->selectRaw('*')
             ->from('mst_export_india')
@@ -53,32 +40,47 @@ class LoginController extends Controller
         $datas = HSCode::select('product_name','hs_code')
         ->where('product_name','LIKE',$request->input('query').'%')->take(10)->get();      
         $dataModified = array();
-       
-            foreach ($datas as $data)
-            {
-             $dataModified[] = $data->product_name.'('.$data->hs_code.')';
-         }        
 
-     return response()->json($dataModified);
+        foreach ($datas as $data)
+        {
+           $dataModified[] = $data->product_name;
+       }        
 
- }
- public function filter_data(Request $request)
- {
-    $str = strstr($request->search_data, '(');
-    $str_m = str_replace( array("(", ")"), '', $str);
-    print_r($str_m);
-    die();
-    $exported_data_count = DB::table(function ($query) {
-        $query->selectRaw('*')
-        ->from('mst_export_india')
-        ->orderBy('id','asc')
-        ->take(2000);
-    });
-    $exported_data = ExportIndia::selectRaw('*')           
-    ->where('hs_code', $str_m)
-    ->from('mst_export_india')
-    ->orderBy('id','asc')
-    ->take(2000)->paginate(100);
+       return response()->json($dataModified);
+
+   }
+   public function filter_data(Request $request)
+   {
+    DB::enableQueryLog();
+    $words = explode(" ", $request->search_data);
+    $query = ExportIndia::query();
+    foreach ($words as $word) {
+        $query->where('product_description', 'LIKE', "%{$word}%");
+    }
+
+    $exported_data_count = $query->get();
+     $words = explode(" ", $request->search_data);
+    $query = ExportIndia::query();
+    foreach ($words as $word) {
+        $query->where('product_description', 'LIKE', "%{$word}%");
+    }
+
+    $exported_data = $query->take(2000)->paginate(1000);
+    // print_r(DB::getQueryLog());
+    // die();
+    // $exported_data_count = DB::table(function ($query) {
+    //     $query->selectRaw('*')
+    //     ->from('mst_export_india')
+    //     ->orderBy('id','asc')
+    //     ->take(2000);
+    // });
+    // DB::enableQueryLog();
+    // $exported_data = ExportIndia::selectRaw('*')
+    // ->where('product_description', 'like', '%' . $search_data . '%')
+    // ->from('mst_export_india')
+    // ->orderBy('id','asc')
+    // ->take(2000)->paginate(100);
+
     $count_of_data = ExportIndia::count();
     return view('index', compact('count_of_data','exported_data','exported_data_count'));
 }
