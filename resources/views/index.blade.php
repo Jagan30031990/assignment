@@ -1,18 +1,15 @@
 @extends('layout.layout') @section('title','Exim Pulse')
 @section('content')
-
-             
-			  
-
-			  <!--begin::Container-->
+<!--begin::Container-->
 <div id="kt_content_container" class="container-xxl">
 	<!--begin::Form-->
-	<form action="#">
+	<form action="{{route('search.filter')}}" method="POST">	
+	@csrf	
 		<!--begin::Card-->
 		<div class="card mb-7">
 			<!--begin::Card body-->
 			<div class="card-body">
-				
+
 				<!--begin::Compact form-->
 				<div class="d-flex align-items-center">
 					<!--begin::Input group-->
@@ -25,8 +22,10 @@
 							</svg>
 						</span>
 						<!--end::Svg Icon-->
-						<input type="text" class="form-control form-control-solid ps-10" data-kt-repeater="tagify" value="tag1, tag2, tag3" value="" placeholder="Search" />
-					
+						<!-- <input type="text" class="form-control form-control-solid ps-10 typeahead" name="search_data" value="{{request('search_data')}}" placeholder="Search" /> -->
+
+						<input class="typeahead form-control  form-control-solid ps-10" type="text" name="search_data" value="{{request('search_data')}}">
+						
 					</div>
 					<!--end::Input group-->
 					<!--begin:Action-->
@@ -45,7 +44,7 @@
 					<!--begin::Row-->
 					<div class="row g-8 mb-8">
 						<!--begin::Col-->
-						
+
 						<!--end::Col-->
 						<!--begin::Col-->
 						<div class="col-xxl-5">
@@ -231,8 +230,8 @@
 	<div class="d-flex flex-wrap flex-stack pb-7">
 		<!--begin::Title-->
 		<div class="d-flex flex-wrap align-items-center my-1">
-			<h3 class="fw-bolder me-5 my-1">0 Items Found
-				<span class="text-gray-400 fs-6">by Recent Updates ↓</span></h3>
+			<h3 class="fw-bolder me-5 my-1">{{$exported_data_count->count()}}/{{$count_of_data}} Items Found
+				<span class="text-gray-400 fs-6">by Recent Data ↓</span></h3>
 			</div>
 			<!--end::Title-->
 			<!--begin::Controls-->
@@ -240,18 +239,7 @@
 				<!--begin::Tab nav-->
 				<ul class="nav nav-pills me-6 mb-2 mb-sm-0">
 
-					<li class="nav-item m-0">
-						<a class="btn btn-sm btn-icon btn-light btn-color-muted btn-active-primary active" data-bs-toggle="tab" href="#kt_project_users_table_pane">
-							<!--begin::Svg Icon | path: icons/duotune/abstract/abs015.svg-->
-							<span class="svg-icon svg-icon-2">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-									<path d="M21 7H3C2.4 7 2 6.6 2 6V4C2 3.4 2.4 3 3 3H21C21.6 3 22 3.4 22 4V6C22 6.6 21.6 7 21 7Z" fill="currentColor" />
-									<path opacity="0.3" d="M21 14H3C2.4 14 2 13.6 2 13V11C2 10.4 2.4 10 3 10H21C21.6 10 22 10.4 22 11V13C22 13.6 21.6 14 21 14ZM22 20V18C22 17.4 21.6 17 21 17H3C2.4 17 2 17.4 2 18V20C2 20.6 2.4 21 3 21H21C21.6 21 22 20.6 22 20Z" fill="currentColor" />
-								</svg>
-							</span>
-							<!--end::Svg Icon-->
-						</a>
-					</li>
+
 				</ul>
 				<!--end::Tab nav-->
 				<!--begin::Actions-->
@@ -290,123 +278,173 @@
 						<div class="table-responsive table-responsive-common">
 							<!--begin::Table-->
 
-						
-								<style>
-									.dt-more-container {
-										text-align:center;
-										margin:2em 0;
-									}
-								</style>
 
-								
-
-								<table id="example" class="table table-row-bordered table-row-dashed gy-4 align-middle fw-bolder" style="border: none !important;" cellspacing="0" width="100%">
-									<thead class="fs-7 text-gray-400 text-uppercase">
-										<tr>
-											<th class="min-w-50px">ID</th>
-											<th class="min-w-150px">Data Type</th>
-											<th class="min-w-150px">Country</th>
-											<th class="min-w-200px">Consignment Type</th>
-											<th class="min-w-200px">Consignment Period</th>
-											<th class="min-w-200px">Shipment Month</th>
-											<th class="min-w-200px">Port Of Loading</th>
-											<th class="min-w-200px">Mode Of Shipment</th>
-											<th class="min-w-150px">Port Code</th>
-											<th class="min-w-100px">Sbill No</th>
-											<th class="min-w-150px">Sbill Date</th>
-											<th class="min-w-100px">HS Code</th>
-											<th class="min-w-200px">Product Description</th>
-											<th class="min-w-250px">Quantity</th>
-											<th class="min-w-50px">UQC</th>
-											<th class="min-w-200px">Invoice Unit Rate FC</th>
-											<th class="min-w-200px">Invoice Currency</th>
-											<th class="min-w-150px">Unit Value INR</th>
-											<th class="min-w-150px">Total Fob INR</th>
-											<th class="min-w-150px">Invoice No</th>
-											<th class="min-w-250px">Port Code Discharge</th>
-											<th class="min-w-250px">Port Code Discharge</th>
-											<th class="min-w-250px">Country Destination</th>
-											<th class="min-w-250px">Consignee ID</th>
-											<th class="min-w-250px">Consignee Name</th>
-											<th class="min-w-250px">Consignee Address</th>
-											<th class="min-w-250px">Consignee Country</th>
-											<th class="min-w-100px">CHA Code</th>
-											<th class="min-w-150px">CHA Name</th>
-											<th class="min-w-150px">IEC</th>
-											<th class="min-w-250px">Exporter Name</th>
-										</tr>
-									</thead>
-								</table>
-
-								
-
-
-							</div>
-							<!--end::Table container-->
-							<div class="dt-more-container">
-									<button id="btn-example-load-more" class="btn common_btn_one" style="display:none">Load More</button>
-								</div>
+							<style>
+								.dt-more-container {
+									text-align:center;
+									margin:2em 0;
+								}
+							</style>
+							{!! $exported_data->links() !!}
+							<table id="example" class="table table-row-bordered table-row-dashed gy-4 align-middle fw-bolder" style="border: none !important;" cellspacing="0" width="100%">
+								<thead class="fs-7 text-gray-400 text-uppercase">
+									<tr>
+										<th class="min-w-50px">ID</th>
+										<th class="min-w-150px">Data Type</th>
+										<th class="min-w-150px">Country</th>
+										<th class="min-w-200px">Consignment Type</th>
+										<th class="min-w-200px">Consignment Period</th>
+										<th class="min-w-200px">Shipment Month</th>
+										<th class="min-w-200px">Port Of Loading</th>
+										<th class="min-w-200px">Mode Of Shipment</th>
+										<th class="min-w-150px">Port Code</th>
+										<th class="min-w-100px">Sbill No</th>
+										<th class="min-w-150px">Sbill Date</th>
+										<th class="min-w-100px">HS Code</th>
+										<th class="min-w-200px">Product Description</th>
+										<th class="min-w-250px">Quantity</th>
+										<th class="min-w-50px">UQC</th>
+										<th class="min-w-200px">Invoice Unit Rate FC</th>
+										<th class="min-w-200px">Invoice Currency</th>
+										<th class="min-w-150px">Unit Value INR</th>
+										<th class="min-w-150px">Total Fob INR</th>
+										<th class="min-w-150px">Invoice No</th>
+										<th class="min-w-250px">Port Code Discharge</th>
+										<th class="min-w-250px">Port Code Discharge</th>
+										<th class="min-w-250px">Country Destination</th>
+										<th class="min-w-250px">Consignee ID</th>
+										<th class="min-w-250px">Consignee Name</th>
+										<th class="min-w-250px">Consignee Address</th>
+										<th class="min-w-250px">Consignee Country</th>
+										<th class="min-w-100px">CHA Code</th>
+										<th class="min-w-150px">CHA Name</th>
+										<th class="min-w-150px">IEC</th>
+										<th class="min-w-250px">Exporter Name</th>
+									</tr>
+								</thead>
+								<tbody>
+									@php $i=1;@endphp
+									@if(!empty($exported_data) && $exported_data->count())
+									@foreach($exported_data as $key => $value)
+									<tr>
+										<td>{{$i++}}</td>
+										<td>{{$value->data_type}}</td>
+										<td>{{$value->country}}</td>
+										<td>{{$value->consignment_type}}</td>
+										<td>{{$value->consignment_period}}</td>
+										<td>{{$value->shipment_month}}</td>
+										<td>{{$value->port_of_loading}}</td>
+										<td>{{$value->port_code}}</td>
+										<td>{{$value->sbill_no}}</td>
+										<td>{{$value->sbill_date}}</td>
+										<td>{{$value->shipment_id}}</td>
+										<td>{{$value->shipment_date}}</td>
+										<td>{{$value->hs_code}}</td>
+										<td>{{$value->product_description}}</td>
+										<td>{{$value->quantity}}</td>
+										<td>{{$value->uqc}}</td>
+										<td>{{$value->invoice_unit_rate_fc}}</td>
+										<td>{{$value->invoice_currency}}</td>
+										<td>{{$value->unit_value_inr}}</td>
+										<td>{{$value->total_fob_value_inr}}</td>
+										<td>{{$value->invoice_no}}</td>
+										<td>{{$value->port_code_discharge}}</td>
+										<td>{{$value->country_destination}}</td>
+										<td>{{$value->consignee_id}}</td>
+										<td>{{$value->consignee_name}}</td>
+										<td>{{$value->consignee_address}}</td>
+										<td>{{$value->consignee_country}}</td>
+										<td>{{$value->cha_code}}</td>
+										<td>{{$value->cha_name}}</td>
+										<td>{{$value->iec}}</td>
+										<td>{{$value->exporter_name}}</td>
+									</tr>
+									@endforeach
+									@else
+									<tr>
+										<td colspan="10">There are no data.</td>
+									</tr>
+									@endif
+								</tbody>
+							</table>
 						</div>
-						<!--end::Card body-->
-						<!--end::Card-->
+						{!! $exported_data->links() !!}
+						<!--end::Table container-->
+						<div class="dt-more-container">
+							<button id="btn-example-load-more" class="btn common_btn_one" style="display:none">Load More</button>
+						</div>
 					</div>
-					<!--end::Tab pane-->
+					<!--end::Card body-->
+					<!--end::Card-->
 				</div>
-				<!--end::Tab Content-->
+				<!--end::Tab pane-->
 			</div>
-			<!--end::Container-->
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-			<script type="text/javascript">
-				$(document).ready(function (){
-					var table = $('#example').DataTable({
-						dom: 'frt',
-						ajax: "{{route('admin.index')}}",
-						columns: [
-							{ "data": "id" },
-							{ "data": "data_type" },
-							{ "data": "country" },
-							{ "data": "consignment_type" },
-							{ "data": "consignment_period" },
-							{ "data": "shipment_month" },
-							{ "data": "port_of_loading" },
-							{ "data": "port_code" },
-							{ "data": "sbill_no" },
-							{ "data": "sbill_date" },
-							{ "data": "shipment_id" },
-							{ "data": "shipment_date" },
-							{ "data": "hs_code" },
-							{ "data": "product_description" },
-							{ "data": "quantity" },
-							{ "data": "uqc" },
-							{ "data": "invoice_unit_rate_fc" },
-							{ "data": "invoice_currency" },
-							{ "data": "unit_value_inr" },
-							{ "data": "total_fob_value_inr" },
-							{ "data": "invoice_no" },
-							{ "data": "port_code_discharge" },
-							{ "data": "country_destination" },
-							{ "data": "consignee_id" },
-							{ "data": "consignee_name" },
-							{ "data": "consignee_address" },
-							{ "data": "consignee_country" },
-							{ "data": "cha_code" },
-							{ "data": "cha_name" },
-							{ "data": "iec" },
-							{ "data": "exporter_name" },
-							],
-						drawCallback: function(){
-							if($('#btn-example-load-more').is(':visible')){
-								$('html, body').animate({
-									scrollTop: $('#btn-example-load-more').offset().top
-								}, 1000);
-							}
-							$('#btn-example-load-more').toggle(this.api().page.hasMore());
-						}      
-					});
-					$('#btn-example-load-more').on('click', function(){
-						table.page.loadMore();
-					});
-				});
-			</script>
-			
+			<!--end::Tab Content-->
+		</div>
+		<!--end::Container-->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function (){
+var table = $('#example').DataTable({
+dom: 'frt',
+ajax: "{{route('admin.index')}}",
+columns: [
+{ "data": "id" },
+{ "data": "data_type" },
+{ "data": "country" },
+{ "data": "consignment_type" },
+{ "data": "consignment_period" },
+{ "data": "shipment_month" },
+{ "data": "port_of_loading" },
+{ "data": "port_code" },
+{ "data": "sbill_no" },
+{ "data": "sbill_date" },
+{ "data": "shipment_id" },
+{ "data": "shipment_date" },
+{ "data": "hs_code" },
+{ "data": "product_description" },
+{ "data": "quantity" },
+{ "data": "uqc" },
+{ "data": "invoice_unit_rate_fc" },
+{ "data": "invoice_currency" },
+{ "data": "unit_value_inr" },
+{ "data": "total_fob_value_inr" },
+{ "data": "invoice_no" },
+{ "data": "port_code_discharge" },
+{ "data": "country_destination" },
+{ "data": "consignee_id" },
+{ "data": "consignee_name" },
+{ "data": "consignee_address" },
+{ "data": "consignee_country" },
+{ "data": "cha_code" },
+{ "data": "cha_name" },
+{ "data": "iec" },
+{ "data": "exporter_name" },
+],
+drawCallback: function(){
+if($('#btn-example-load-more').is(':visible')){
+$('html, body').animate({
+scrollTop: $('#btn-example-load-more').offset().top
+}, 1000);
+}
+$('#btn-example-load-more').toggle(this.api().page.hasMore());
+}      
+});
+$('#btn-example-load-more').on('click', function(){
+table.page.loadMore();
+});
+});
+</script> -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js" ></script>
+<script type="text/javascript">
+	var path = "{{ route('autocomplete') }}";
+	$('input.typeahead').typeahead({
+		source:  function (query, process) {
+			return $.get(path, { query: query }, function (data) {
+				return process(data);
+			});
+		}
+	});
+</script>
 @endsection
