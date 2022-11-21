@@ -29,6 +29,8 @@ var KTCustomersList = function () {
         datatable = $(table).DataTable({
             "info": false,
             'order': [],
+            "scrollY": 300,
+             "scrollX": true,
             'columnDefs': [
                 { orderable: false, targets: 0 }, // Disable ordering on column 0 (checkbox)
                 { orderable: false, targets: 6 }, // Disable ordering on column 6 (actions)
