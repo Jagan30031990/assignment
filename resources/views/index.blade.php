@@ -1,4 +1,5 @@
 @extends('layout.layout') @section('title','Exim Pulse')
+
 @section('content')
 <!--begin::Container-->
 <div id="kt_content_container" class="container-xxl">
@@ -8,7 +9,7 @@
 		<!--begin::Card-->
 		<div class="card mb-7">
 			<!--begin::Card body-->
-			<div class="card-body">
+			<div class="card-body common_card_body">
 
 				<!--begin::Compact form-->
 				<div class="d-flex align-items-center">
@@ -17,14 +18,14 @@
 							<option>Search Field</option>
 							<option value="productDesc">Product</option>
 							<option value="hSCode">HS 2</option>
-							<!-- <option value="hs4Or8">HS 4, 6 Or 8</option> -->
+							<option value="hs4Or8">HS 4, 6 Or 8</option>
 							<!-- <option value="GlobalImporter">Consignee Name</option>
                             <option value="GlobalExporter">Shipper Name</option>
                             <option value="GlobalCompany">Company Name</option> -->
 						</select>
 					</div>
 					<!--begin::Input group-->
-					<div class="position-relative w-md-500px me-md-2">
+					<div class="position-relative w-md-400px me-md-2">
 						<!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
 						<span class="svg-icon svg-icon-3 svg-icon-gray-500 position-absolute top-50 translate-middle ms-6">
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -47,9 +48,9 @@
 					<!--end:Action-->
 				</div>
 				<div class="tag_example">
-				     <!-- <h3>Example:</h3> -->
-				     <ul class="example_tags">
-					  
+					<h3>Search Example:</h3>
+					<ul class="example_tags">
+
 					</ul>
 				</div>
 				<!--end::Compact form-->
@@ -59,188 +60,73 @@
 					<div class="separator separator-dashed mt-9 mb-6"></div>
 					<!--end::Separator-->
 					<!--begin::Row-->
+					<h4 class="pb-3">Advanced Search</h4>
 					<div class="row g-8 mb-8">
 						<!--begin::Col-->
+                        
+						<!--end::Col-->
+						<!--begin::Col-->
+						<div class="col-xxl-12">
+							<!--begin::Row-->
+							<div class="row g-8">
+								<!--begin::Col-->
+								<div class="col-lg-3 col-md-3 col-sm-6">
 
-						<!--end::Col-->
-						<!--begin::Col-->
-						<div class="col-xxl-5">
-							<!--begin::Row-->
-							<div class="row g-8">
-								<!--begin::Col-->
-								<div class="col-lg-6">
-									<label class="fs-6 form-label fw-bolder text-dark">Team Type</label>
 									<!--begin::Select-->
-									<select class="form-select form-select-solid" data-control="select2" data-placeholder="In Progress" data-hide-search="true">
-										<option value=""></option>
-										<option value="1">Not started</option>
-										<option value="2" selected="selected">In Progress</option>
-										<option value="3">Done</option>
+									<select class="export_import form-select  multiselect_class" multiple="multiple">
+										<option value="O1" data-badge="">Export</option>
+										<option value="O2" data-badge="">Import</option>
+
 									</select>
 									<!--end::Select-->
 								</div>
 								<!--end::Col-->
 								<!--begin::Col-->
-								<div class="col-lg-6">
-									<label class="fs-6 form-label fw-bolder text-dark">Select Group</label>
-									<!--begin::Radio group-->
-									<div class="nav-group nav-group-fluid">
-										<!--begin::Option-->
-										<label>
-											<input type="radio" class="btn-check" name="type" value="has" checked="checked" />
-											<span class="btn btn-sm btn-color-muted btn-active btn-active-primary fw-bolder px-4">All</span>
-										</label>
-										<!--end::Option-->
-										<!--begin::Option-->
-										<label>
-											<input type="radio" class="btn-check" name="type" value="users" />
-											<span class="btn btn-sm btn-color-muted btn-active btn-active-primary fw-bolder px-4">Users</span>
-										</label>
-										<!--end::Option-->
-										<!--begin::Option-->
-										<label>
-											<input type="radio" class="btn-check" name="type" value="orders" />
-											<span class="btn btn-sm btn-color-muted btn-active btn-active-primary fw-bolder px-4">Orders</span>
-										</label>
-										<!--end::Option-->
-									</div>
-									<!--end::Radio group-->
-								</div>
-								<!--end::Col-->
-							</div>
-							<!--end::Row-->
-						</div>
-						<!--end::Col-->
-					</div>
-					<!--end::Row-->
-					<!--begin::Row-->
-					<div class="row g-8">
-						<!--begin::Col-->
-						<div class="col-xxl-7">
-							<!--begin::Row-->
-							<div class="row g-8">
-								<!--begin::Col-->
-								<div class="col-lg-4">
-									<label class="fs-6 form-label fw-bolder text-dark">Min. Amount</label>
-									<!--begin::Dialer-->
-									<div class="position-relative" data-kt-dialer="true" data-kt-dialer-min="1000" data-kt-dialer-max="50000" data-kt-dialer-step="1000" data-kt-dialer-prefix="$" data-kt-dialer-decimals="2">
-										<!--begin::Decrease control-->
-										<button type="button" class="btn btn-icon btn-active-color-gray-700 position-absolute translate-middle-y top-50 start-0" data-kt-dialer-control="decrease">
-											<!--begin::Svg Icon | path: icons/duotune/general/gen042.svg-->
-											<span class="svg-icon svg-icon-1">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-													<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
-													<rect x="6.01041" y="10.9247" width="12" height="2" rx="1" fill="currentColor" />
-												</svg>
-											</span>
-											<!--end::Svg Icon-->
-										</button>
-										<!--end::Decrease control-->
-										<!--begin::Input control-->
-										<input type="text" class="form-control form-control-solid border-0 ps-12" data-kt-dialer-control="input" placeholder="Amount" name="manageBudget" readonly="readonly" value="$50" />
-										<!--end::Input control-->
-										<!--begin::Increase control-->
-										<button type="button" class="btn btn-icon btn-active-color-gray-700 position-absolute translate-middle-y top-50 end-0" data-kt-dialer-control="increase">
-											<!--begin::Svg Icon | path: icons/duotune/general/gen041.svg-->
-											<span class="svg-icon svg-icon-1">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-													<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
-													<rect x="10.8891" y="17.8033" width="12" height="2" rx="1" transform="rotate(-90 10.8891 17.8033)" fill="currentColor" />
-													<rect x="6.01041" y="10.9247" width="12" height="2" rx="1" fill="currentColor" />
-												</svg>
-											</span>
-											<!--end::Svg Icon-->
-										</button>
-										<!--end::Increase control-->
-									</div>
-									<!--end::Dialer-->
-								</div>
-								<!--end::Col-->
-								<!--begin::Col-->
-								<div class="col-lg-4">
-									<label class="fs-6 form-label fw-bolder text-dark">Max. Amount</label>
-									<!--begin::Dialer-->
-									<div class="position-relative" data-kt-dialer="true" data-kt-dialer-min="1000" data-kt-dialer-max="50000" data-kt-dialer-step="1000" data-kt-dialer-prefix="$" data-kt-dialer-decimals="2">
-										<!--begin::Decrease control-->
-										<button type="button" class="btn btn-icon btn-active-color-gray-700 position-absolute translate-middle-y top-50 start-0" data-kt-dialer-control="decrease">
-											<!--begin::Svg Icon | path: icons/duotune/general/gen042.svg-->
-											<span class="svg-icon svg-icon-1">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-													<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
-													<rect x="6.01041" y="10.9247" width="12" height="2" rx="1" fill="currentColor" />
-												</svg>
-											</span>
-											<!--end::Svg Icon-->
-										</button>
-										<!--end::Decrease control-->
-										<!--begin::Input control-->
-										<input type="text" class="form-control form-control-solid border-0 ps-12" data-kt-dialer-control="input" placeholder="Amount" name="manageBudget" readonly="readonly" value="$100" />
-										<!--end::Input control-->
-										<!--begin::Increase control-->
-										<button type="button" class="btn btn-icon btn-active-color-gray-700 position-absolute translate-middle-y top-50 end-0" data-kt-dialer-control="increase">
-											<!--begin::Svg Icon | path: icons/duotune/general/gen041.svg-->
-											<span class="svg-icon svg-icon-1">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-													<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
-													<rect x="10.8891" y="17.8033" width="12" height="2" rx="1" transform="rotate(-90 10.8891 17.8033)" fill="currentColor" />
-													<rect x="6.01041" y="10.9247" width="12" height="2" rx="1" fill="currentColor" />
-												</svg>
-											</span>
-											<!--end::Svg Icon-->
-										</button>
-										<!--end::Increase control-->
-									</div>
-									<!--end::Dialer-->
-								</div>
-								<!--end::Col-->
-								<!--begin::Col-->
-								<div class="col-lg-4">
-									<label class="fs-6 form-label fw-bolder text-dark">Team Size</label>
-									<input type="text" class="form-control form-control form-control-solid" name="city" />
-								</div>
-								<!--end::Col-->
-							</div>
-							<!--end::Row-->
-						</div>
-						<!--end::Col-->
-						<!--begin::Col-->
-						<div class="col-xxl-5">
-							<!--begin::Row-->
-							<div class="row g-8">
-								<!--begin::Col-->
-								<div class="col-lg-6">
-									<label class="fs-6 form-label fw-bolder text-dark">Category</label>
+								<div class="col-lg-3 col-md-3 col-sm-6">
 									<!--begin::Select-->
-									<select class="form-select form-select-solid" data-control="select2" data-placeholder="In Progress" data-hide-search="true">
-										<option value=""></option>
-										<option value="1">Not started</option>
-										<option value="2" selected="selected">Select</option>
-										<option value="3">Done</option>
+									<select class="country_select form-select  multiselect_class" multiple="multiple">
+
+										<option value="O1" data-badge="">India</option>
+										<option value="O2" data-badge="">USA</option>
+
 									</select>
-									<!--end::Select-->
+									<!--end::Col-->
 								</div>
-								<!--end::Col-->
-								<!--begin::Col-->
-								<div class="col-lg-6">
-									<label class="fs-6 form-label fw-bolder text-dark">Status</label>
-									<div class="form-check form-switch form-check-custom form-check-solid mt-1">
-										<input class="form-check-input" type="checkbox" value="" id="flexSwitchChecked" checked="checked" />
-										<label class="form-check-label" for="flexSwitchChecked">Active</label>
-									</div>
+								<div class="col-lg-3 col-md-3 col-sm-6">
+									<!--begin::Select-->
+									<select class="hscode form-select  multiselect_class" multiple="multiple">
+
+										<option value="O1" data-badge="">25</option>
+										<option value="O2" data-badge="">45</option>
+
+									</select>
+									<!--end::Col-->
 								</div>
-								<!--end::Col-->
+								<div class="col-lg-3 col-md-3 col-sm-6">
+									<!--begin::Select-->
+									<select class="year_select form-select  multiselect_class" multiple="multiple">
+
+										<option value="O1" data-badge="">2022</option>
+										<option value="O2" data-badge="">2021</option>
+
+									</select>
+									<!--end::Col-->
+								</div>
+								<!--end::Row-->
 							</div>
-							<!--end::Row-->
+							<!--end::Col-->
 						</div>
-						<!--end::Col-->
+						<!--end::Row-->
+						<!--begin::Row-->
+						
+						<!--end::Row-->
 					</div>
-					<!--end::Row-->
+					<!--end::Advance form-->
 				</div>
-				<!--end::Advance form-->
+				<!--end::Card body-->
 			</div>
-			<!--end::Card body-->
+			<!--end::Card-->
 		</div>
-		<!--end::Card-->
 	</form>
 	<!--end::Form-->
 	<!--begin::Tab Content-->
@@ -263,7 +149,7 @@
 								margin: 2em 0;
 							}
 						</style>
-						<div class="card-header align-items-center py-5 gap-2 gap-md-5">
+						<div class="card-header  align-items-center py-5 gap-2 gap-md-5">
 							<!--begin::Card title-->
 							<div class="card-title">
 								<!--begin::Search-->
@@ -301,7 +187,7 @@
 							<!--end::Card toolbar-->
 						</div>
 					</div>
-					
+
 					<table id="exportindia_table" class="table table-row-bordered table-row-dashed gy-4 same_table_design align-middle fw-bolder" style="border: none !important;" cellspacing="0" width="100%">
 						<thead class="fs-7 text-gray-400 text-uppercase">
 							<tr>
@@ -375,7 +261,7 @@
 								<td>{{$value->cha_code}}</td>
 								<td>{{$value->cha_name}}</td>
 								<td>{{$value->iec}}</td>
-								<td>{{$value->exporter_name}}</td>				
+								<td>{{$value->exporter_name}}</td>
 							</tr>
 							@endforeach
 							@else
@@ -451,6 +337,7 @@ table.page.loadMore();
 });
 </script> -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>
 <script type="text/javascript">
 	var path = "{{ route('autocomplete') }}";
@@ -467,7 +354,6 @@ table.page.loadMore();
 <script>
 	$(document).ready(function() {
 		$("#exportindia_table").DataTable({
-			"dom": '<"top"flp<"clear">>rt<"bottom"ifp<"clear">>',
 			"info": false,
 			"scrollY": 600,
 			"scrollX": true,
@@ -478,17 +364,19 @@ table.page.loadMore();
 
 		});
 
-		var hscode = ['25', '56', '58', '95', '57'];
-		var product = ['PVC Resin', 'test0', 'test', 'test5']
+		var hscode = ['10', '11', '12', '13', '14'];
+		var product = ['PVC Resin', 'CEREALS', 'Rice', 'Metal']
+		var hs4Or8_c = ['10410', '10511', '10641', '110311', '110412', '110319', '27149010', '27149030']
 		var example_tags = document.querySelector('.example_tags');
-	
+
 		var html0 = '';
 		var html1 = '';
+		var html2 = '';
 		$(".search_product").change(function() {
-			example_tags.innerHTML = ' ';
+
 			if ($(this).val() == "productDesc") {
-				
-				// $('.tag_example h3').addClass('active')
+
+				$('.tag_example').addClass('active')
 				for (let index = 0; index < product.length; index++) {
 					const element = product[index];
 
@@ -498,10 +386,10 @@ table.page.loadMore();
 
 				}
 				example_tags.innerHTML = html0;
-			}
-			if ($(this).val() == 'hSCode') {
-				
-				// $('.tag_example h3').addClass('active')
+				product = [];
+			} else if ($(this).val() == 'hSCode') {
+
+				$('.tag_example').addClass('active')
 				for (let index = 0; index < hscode.length; index++) {
 					const element = hscode[index];
 
@@ -511,16 +399,55 @@ table.page.loadMore();
 
 				}
 				example_tags.innerHTML = html1;
-				
+				hscode = [];
+			} else if ($(this).val() == 'hs4Or8') {
+				$('.tag_example').addClass('active')
+				for (let index = 0; index < hs4Or8_c.length; index++) {
+					const element = hs4Or8_c[index];
+
+					html2 += `
+					<li class="exple_text">${element}</li>
+				`
+
+				}
+				example_tags.innerHTML = html2;
+				hs4Or8_c = [];
 			} else {
-				// $('.tag_example h3').removeClass('active')
+				$('.tag_example').removeClass('active')
 			}
 
 
 			console.log($(this).val())
 		});
 
-
+		$(".export_import").select2({
+			closeOnSelect: false,
+			placeholder: "Export Import",
+			allowHtml: true,
+			allowClear: true,
+			tags: false // создает новые опции на лету
+		});
+		$(".country_select").select2({
+			closeOnSelect: false,
+			placeholder: "Reporting Country",
+			allowHtml: true,
+			allowClear: true,
+			tags: false // создает новые опции на лету
+		});
+		$(".year_select").select2({
+			closeOnSelect: false,
+			placeholder: "Select Year",
+			allowHtml: true,
+			allowClear: true,
+			tags: false // создает новые опции на лету
+		});
+		$(".hscode").select2({
+			closeOnSelect: false,
+			placeholder: "Select hscode",
+			allowHtml: true,
+			allowClear: true,
+			tags: false // создает новые опции на лету
+		});
 	})
 </script>
 @endsection
