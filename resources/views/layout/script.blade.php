@@ -31,30 +31,13 @@
  <!--toaster js end-->
  
  <script src="{{asset('assets/plugins/custom/formrepeater/formrepeater.bundle.js')}}"></script>
-
-
-		
-
-
-<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.js"></script>
-<script type="text/javascript" src="https://gyrocode.github.io/jquery-datatables-pageLoadMore/1.0.2/js/dataTables.pageLoadMore.min.js"></script>
-
-
-<script>
+<!-- <script>
    function myF(){
-    new Tagify(document.querySelector('[data-kt-repeater="tagify"]'), {
-			whitelist: ["Important", "Urgent", "High", "Medium", "Low"],
-			maxTags: 5,
-			dropdown: {
-				maxItems: 10,           // <- mixumum allowed rendered suggestions
-				enabled: 1,             // <- show suggestions on focus
-				closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
-			}
-		});
+    new Tagify(document.querySelector('[name="search_data"]'));
     
    }
    myF();
-</script>
+</script> -->
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-pie-chart/2.1.6/jquery.easypiechart.min.js" integrity="sha512-DHNepbIus9t4e6YoMBSJLwl+nnm0tIwMBonsQQ+W9NKN6gVVVbomJs9Ii3mQ+HzGZiU5FyJLdnAz9a63ZgZvTQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

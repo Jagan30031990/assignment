@@ -28,9 +28,7 @@ Route::get('/home-page', [LoginController::class, 'home_page'])->name('admin.ind
 
 });
 
-Route::get('/autocomplete', [LoginController::class, 'autocomplete'])->name('autocomplete');
-Route::post('/get_search_data', [LoginController::class, 'filter_data'])->name('search.filter');
-
+Route::get('/morePosts', [LoginController::class, 'morePosts'])->name('users.morePosts');
 Route::get('google', [SocialiteAuthController::class, 'googleRedirect'])->name('auth/google');
 Route::get('/auth/google-callback', [SocialiteAuthController::class, 'loginWithGoogle']);
 
@@ -57,9 +55,3 @@ Route::view('/shared-workspaces', 'webViews.shared_workspaces')->name('webViews.
 Route::view('/delete-workspaces', 'webViews.workspace_trash')->name('webViews.workspace_trash');
 Route::view('/database-updates', 'webViews.database_updates')->name('webViews.database_updates');
 Route::view('/system-generated', 'webViews.system_generated')->name('webViews.system_generated');
-
-
-/*Home tabs link*/
-Route::view('/global-search', 'webViews.global_search')->name('webViews.global_search');
-Route::view('/advance-search', 'webViews.advance_search')->name('webViews.advance_search');
-Route::view('/hot-products', 'webViews.hot_products')->name('webViews.hot_products');
