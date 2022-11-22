@@ -18,23 +18,14 @@ class LoginController extends Controller
     }
     public function home_page(Request $request)
     {
-
-
-        $exported_data = DB::table(function ($query) {
-            $query->selectRaw('*')
-            ->from('mst_export_india')
-            ->orderBy('id','asc')
-            ->take(2000);
-        })->paginate(2000);
-
-        $exported_data_count = DB::table(function ($query) {
-            $query->selectRaw('*')
-            ->from('mst_export_india')
-            ->orderBy('id','asc')
-            ->take(2000);
-        });
+            if ($request->ajax()) {
+            $data = ExportIndia::take(2000)->get();
+            return Datatables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
         $count_of_data = ExportIndia::count();
-        return view('index', compact('count_of_data','exported_data','exported_data_count'));
+        return view('index',compact('count_of_data'));
     }
     public function autocomplete(Request $request)
     {
@@ -52,12 +43,16 @@ class LoginController extends Controller
     }
     public function filter_data(Request $request)
     {
-
+        $words = explode(" ", $request->search_data);
+        print_r($words);
+        die();
         if(is_numeric($request->search_data))
         {
             $words = explode(" ", $request->search_data);
             $query = ExportIndia::query();
             foreach ($words as $word) {
+                print_r($word);
+                die();
                 $query->where('hs_code', 'LIKE', "%{$word}%");
             }
 
