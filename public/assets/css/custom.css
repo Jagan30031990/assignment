@@ -1,3 +1,10 @@
+.header-fixed.toolbar-fixed .wrapper {
+    padding-top: 60px !important;
+}
+.container-xxl-full-width{
+max-width: 100% !important;
+padding: 0 10px !important;
+}
 /* width */
 .dataTables_scrollBody::-webkit-scrollbar {
     width: 6px;
@@ -33,10 +40,14 @@ table.dataTable thead .sorting{
 .common_card_body.pt-0{
     padding: 15px 0 15px 15px !important;
 }
+
 .input_padding_common{
     padding: 7px 10px 7px 15px !important;
     font-size: 14px;
     
+}
+.search_p{
+    padding: 7px 0 7px 40px !important;
 }
 .card_box_common{
     padding: 22px 15px 1px !important;
@@ -476,7 +487,17 @@ ul.example_tags{
   margin-right: 20px;
   vertical-align: middle;
 } */
-
+.common_form_box label{
+    padding: 10px 0;
+    margin: 0;
+    font-size: 14px;
+}
+#kt_ecommerce_sales_flatpickr_clear_tags{
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: transparent;
+}
 @media (min-width: 576px){
 .modal-dialog-centered700px{
     max-width: 700px !important;

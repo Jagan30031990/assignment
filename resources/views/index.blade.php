@@ -14,15 +14,15 @@
 				<!--begin::Compact form-->
 				<div class="d-flex align-items-center">
 					<div class="position-relative w-md-250px me-md-2">
-						<select class="form-select search_product" data-kt-repeater="select2" on data-placeholder="Select an option" id="product_data" name="product_data" value="{{request('product_data')}}" required>
+						<select class="form-select input_padding_common search_product" data-kt-repeater="select2" on data-placeholder="Select an option" id="product_data" name="product_data" value="{{request('product_data')}}" required>
 							<option value="">Search Field</option>
-							<option value="productDesc" <?php echo (isset($_POST['product_data']) && $_POST['product_data'] == 'productDesc')?'selected="selected"':''?>>Product</option>
-							<option value="hSCode" <?php echo (isset($_POST['product_data']) && $_POST['product_data'] == 'hSCode')?'selected="selected"':''?>>HS 2</option>
-							<option value="hs4Or8" <?php echo (isset($_POST['product_data']) && $_POST['product_data'] == 'hs4Or8')?'selected="selected"':''?>>HS 4, 6 Or 8</option>
+							<option value="productDesc" <?php echo (isset($_POST['product_data']) && $_POST['product_data'] == 'productDesc') ? 'selected="selected"' : '' ?>>Product</option>
+							<option value="hSCode" <?php echo (isset($_POST['product_data']) && $_POST['product_data'] == 'hSCode') ? 'selected="selected"' : '' ?>>HS 2</option>
+							<option value="hs4Or8" <?php echo (isset($_POST['product_data']) && $_POST['product_data'] == 'hs4Or8') ? 'selected="selected"' : '' ?>>HS 4, 6 Or 8</option>
 							<!-- <option value="GlobalImporter">Consignee Name</option>
                             <option value="GlobalExporter">Shipper Name</option>
                             <option value="GlobalCompany">Company Name</option> -->
-                        </select>
+						</select>
 					</div>
 					<!--begin::Input group-->
 					<div class="position-relative w-md-400px me-md-2">
@@ -36,8 +36,17 @@
 						<!--end::Svg Icon-->
 						<!-- <input type="text" class="form-control form-control-solid ps-10 typeahead" name="search_data" value="{{request('search_data')}}" placeholder="Search" /> -->
 
-					<input class="typeahead form-control  form-control-solid ps-10"  data-placeholder="Please enter details of _" type="text" name="search_data" id="data_field" value="{{request('search_data')}}" required>
-
+						<input class="typeahead search_p form-control  form-control-solid ps-10" data-placeholder="Please enter details of _" type="text" name="search_data" id="data_field" value="{{request('search_data')}}" required>
+						<button class="btn btn-sm btn-icon btn-light" id="kt_ecommerce_sales_flatpickr_clear_tags">
+							<!--begin::Svg Icon | path: icons/duotune/arrows/arr088.svg-->
+							<span class="svg-icon svg-icon-2">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+									<rect opacity="0.5" x="7.05025" y="15.5356" width="12" height="2" rx="1" transform="rotate(-45 7.05025 15.5356)" fill="currentColor"></rect>
+									<rect x="8.46447" y="7.05029" width="12" height="2" rx="1" transform="rotate(45 8.46447 7.05029)" fill="currentColor"></rect>
+								</svg>
+							</span>
+							<!--end::Svg Icon-->
+						</button>
 					</div>
 					<!--end::Input group-->
 					<!--begin:Action-->
@@ -63,7 +72,7 @@
 					<h4 class="pb-2">Filter</h4>
 					<div class="row g-8 mb-8">
 						<!--begin::Col-->
-                        
+
 						<!--end::Col-->
 						<!--begin::Col-->
 						<div class="col-xxl-12 mt-8">
@@ -114,15 +123,15 @@
 								</div>
 								<!--end::Row-->
 								<div class="col-lg-1 col-md-1 col-sm-2">
-								<button type="button" class="btn btn-sm common_btn_one me-5">Apply</button>
+									<button type="button" class="btn btn-sm common_btn_one me-5">Apply</button>
 								</div>
 							</div>
 							<!--end::Col-->
 						</div>
-						
+
 						<!--end::Row-->
 						<!--begin::Row-->
-						
+
 						<!--end::Row-->
 					</div>
 					<!--end::Advance form-->
@@ -455,15 +464,15 @@ table.page.loadMore();
 	})
 </script>
 <script>
-	$('#product_data').change(function(){
+	$('#product_data').change(function() {
 		const dbText = $(this).find(':selected').text();
-		$('#data_field').attr('placeholder', function(){
+		$('#data_field').attr('placeholder', function() {
 			return $(this).data('placeholder').replace('_', dbText)
 		});
 	}).change()
 </script>
 <script>
-	$('#submit_search').click(function () {
+	$('#submit_search').click(function() {
 		data_field = $('#data_field').val();
 		product_data = $('#data_field').val();
 		if (data_field == "" && product_data == "") {
@@ -476,10 +485,20 @@ table.page.loadMore();
 	});
 </script>
 <script>
+	$('#kt_ecommerce_sales_flatpickr_clear_tags').hide();
 	function search_data() {
+		
 		var inputBox = document.getElementById('data_field');
-		this.value == 'hSCode' || this.value == 'hs4Or8' ? inputBox.type = 'number' : inputBox.type = 'text'; 
+		this.value == 'hSCode' || this.value == 'hs4Or8' ? inputBox.type = 'number' : inputBox.type = 'text';
 	}
 	document.getElementById('product_data').addEventListener('change', search_data);
+
+	$('#data_field').on('keydown',function(){
+		$('#kt_ecommerce_sales_flatpickr_clear_tags').show();
+	})
+	$('#kt_ecommerce_sales_flatpickr_clear_tags').on('click',function(){
+		$(this).hide();
+		$('#data_field').val(' ');
+	})
 </script>
 @endsection
