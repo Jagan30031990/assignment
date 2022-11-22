@@ -7,14 +7,14 @@
 	<form action="{{route('search.filter')}}" method="POST">
 		@csrf
 		<!--begin::Card-->
-		<div class="card mb-7">
+		<div class="card_box_common mb-7">
 			<!--begin::Card body-->
-			<div class="card-body common_card_body">
+			<div class="">
 
 				<!--begin::Compact form-->
 				<div class="d-flex align-items-center">
 					<div class="position-relative w-md-250px me-md-2">
-						<select class="form-select search_product" data-kt-repeater="select2" on data-placeholder="Select an option">
+						<select class="form-select input_padding_common  search_product" data-kt-repeater="select2" on data-placeholder="Select an option">
 							<option>Search Field</option>
 							<option value="productDesc">Product</option>
 							<option value="hSCode">HS 2</option>
@@ -36,14 +36,14 @@
 						<!--end::Svg Icon-->
 						<!-- <input type="text" class="form-control form-control-solid ps-10 typeahead" name="search_data" value="{{request('search_data')}}" placeholder="Search" /> -->
 
-						<input class="typeahead form-control  form-control-solid ps-10" type="text" name="search_data" value="{{request('search_data')}}">
+						<input class="typeahead form-control input_padding_common  form-control-solid ps-10" type="text" name="search_data" value="{{request('search_data')}}">
 
 					</div>
 					<!--end::Input group-->
 					<!--begin:Action-->
 					<div class="d-flex align-items-center">
-						<button type="submit" class="btn common_btn_one me-5">Search</button>
-						<a id="kt_horizontal_search_advanced_link" class="btn common_btn_one" data-bs-toggle="collapse" href="#kt_advanced_search_form">Advanced Search</a>
+						<button type="submit" class="btn btn-sm common_btn_one me-2">Search</button>
+						<a id="kt_horizontal_search_advanced_link" class="btn btn-sm common_btn_one" href="#kt_advanced_search_form">Advanced Search</a>
 					</div>
 					<!--end:Action-->
 				</div>
@@ -55,25 +55,25 @@
 				</div>
 				<!--end::Compact form-->
 				<!--begin::Advance form-->
-				<div class="collapse" id="kt_advanced_search_form">
+				<div class="collapse filter_data show" id="kt_advanced_search_form">
 					<!--begin::Separator-->
-					<div class="separator separator-dashed mt-9 mb-6"></div>
+					<div class="separator separator-dashed mt-4 mb-4"></div>
 					<!--end::Separator-->
 					<!--begin::Row-->
-					<h4 class="pb-3">Advanced Search</h4>
+					<h4 class="pb-2">Filter</h4>
 					<div class="row g-8 mb-8">
 						<!--begin::Col-->
                         
 						<!--end::Col-->
 						<!--begin::Col-->
-						<div class="col-xxl-12">
+						<div class="col-xxl-12 mt-8">
 							<!--begin::Row-->
 							<div class="row g-8">
 								<!--begin::Col-->
-								<div class="col-lg-3 col-md-3 col-sm-6">
+								<div class="col-lg-2 col-md-2 col-sm-4">
 
 									<!--begin::Select-->
-									<select class="export_import form-select  multiselect_class" multiple="multiple">
+									<select class="export_import input_padding_common_tow form-select  multiselect_class" multiple="multiple">
 										<option value="O1" data-badge="">Export</option>
 										<option value="O2" data-badge="">Import</option>
 
@@ -82,9 +82,9 @@
 								</div>
 								<!--end::Col-->
 								<!--begin::Col-->
-								<div class="col-lg-3 col-md-3 col-sm-6">
+								<div class="col-lg-3 col-md-3 col-sm-4">
 									<!--begin::Select-->
-									<select class="country_select form-select  multiselect_class" multiple="multiple">
+									<select class="country_select input_padding_common_tow form-select  multiselect_class" multiple="multiple">
 
 										<option value="O1" data-badge="">India</option>
 										<option value="O2" data-badge="">USA</option>
@@ -92,9 +92,9 @@
 									</select>
 									<!--end::Col-->
 								</div>
-								<div class="col-lg-3 col-md-3 col-sm-6">
+								<div class="col-lg-3 col-md-3 col-sm-4">
 									<!--begin::Select-->
-									<select class="hscode form-select  multiselect_class" multiple="multiple">
+									<select class="hscode form-select input_padding_common_tow multiselect_class" multiple="multiple">
 
 										<option value="O1" data-badge="">25</option>
 										<option value="O2" data-badge="">45</option>
@@ -102,9 +102,9 @@
 									</select>
 									<!--end::Col-->
 								</div>
-								<div class="col-lg-3 col-md-3 col-sm-6">
+								<div class="col-lg-3 col-md-3 col-sm-4">
 									<!--begin::Select-->
-									<select class="year_select form-select  multiselect_class" multiple="multiple">
+									<select class="year_select form-select input_padding_common_tow multiselect_class" multiple="multiple">
 
 										<option value="O1" data-badge="">2022</option>
 										<option value="O2" data-badge="">2021</option>
@@ -113,9 +113,13 @@
 									<!--end::Col-->
 								</div>
 								<!--end::Row-->
+								<div class="col-lg-1 col-md-1 col-sm-2">
+								<button type="button" class="btn btn-sm common_btn_one me-5">Apply</button>
+								</div>
 							</div>
 							<!--end::Col-->
 						</div>
+						
 						<!--end::Row-->
 						<!--begin::Row-->
 						
@@ -153,7 +157,7 @@
 							<!--begin::Card title-->
 							<div class="card-title">
 								<!--begin::Search-->
-								<div class="d-flex align-items-center position-relative my-1">
+								<div class="d-flex align-items-center position-relative">
 
 									<h3 class="fw-bolder me-5 my-1">Showing 1 to {{$exported_data_count->count()}} of {{$count_of_data}} records
 										<!-- <span class="text-gray-400 fs-6">records</span> -->
@@ -163,7 +167,7 @@
 							</div>
 							<!--end::Card title-->
 							<!--begin::Card toolbar-->
-							<div class="card-toolbar">
+							<div class="card-toolbar" style="display: none;">
 								<!--begin::Actions-->
 								<div class="d-flex my-0">
 									<!--begin::Select-->
@@ -192,8 +196,8 @@
 						<thead class="fs-7 text-gray-400 text-uppercase">
 							<tr>
 								<th class="min-w-50px">ID</th>
-								<th class="min-w-150px">Data Type</th>
-								<th class="min-w-150px">Country</th>
+								<th class="min-w-100px">Data Type</th>
+								<th class="min-w-100px">Country</th>
 								<th class="min-w-200px">Consignment Type</th>
 								<th class="min-w-200px">Consignment Period</th>
 								<th class="min-w-200px">Shipment Month</th>
@@ -205,24 +209,24 @@
 								<th class="min-w-150px">Shipment ID</th>
 								<th class="min-w-150px">Shipment Date</th>
 								<th class="min-w-100px">HS Code</th>
-								<th class="min-w-200px">Product Description</th>
-								<th class="min-w-250px">Quantity</th>
+								<th class="min-w-400px">Product Description</th>
+								<th class="min-w-100px">Quantity</th>
 								<th class="min-w-50px">UQC</th>
 								<th class="min-w-200px">Invoice Unit Rate FC</th>
 								<th class="min-w-200px">Invoice Currency</th>
 								<th class="min-w-150px">Unit Value INR</th>
 								<th class="min-w-150px">Total Fob INR</th>
-								<th class="min-w-150px">Invoice No</th>
-								<th class="min-w-250px">Port Code Discharge</th>
-								<th class="min-w-250px">Country Destination</th>
-								<th class="min-w-250px">Consignee ID</th>
-								<th class="min-w-250px">Consignee Name</th>
-								<th class="min-w-250px">Consignee Address</th>
-								<th class="min-w-250px">Consignee Country</th>
+								<th class="min-w-100px">Invoice No</th>
+								<th class="min-w-200px">Port Code Discharge</th>
+								<th class="min-w-200px">Country Destination</th>
+								<th class="min-w-100px">Consignee ID</th>
+								<th class="min-w-200px">Consignee Name</th>
+								<th class="min-w-200px">Consignee Address</th>
+								<th class="min-w-200px">Consignee Country</th>
 								<th class="min-w-100px">CHA Code</th>
-								<th class="min-w-150px">CHA Name</th>
-								<th class="min-w-150px">IEC</th>
-								<th class="min-w-250px">Exporter Name</th>
+								<th class="min-w-100px">CHA Name</th>
+								<th class="min-w-80px">IEC</th>
+								<th class="min-w-150px">Exporter Name</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -355,7 +359,7 @@ table.page.loadMore();
 	$(document).ready(function() {
 		$("#exportindia_table").DataTable({
 			"info": false,
-			"scrollY": 600,
+			"scrollY": 450,
 			"scrollX": true,
 			"pageLength": 100,
 			scrollCollapse: true,
@@ -365,7 +369,7 @@ table.page.loadMore();
 		});
 
 		var hscode = ['10', '11', '12', '13', '14'];
-		var product = ['PVC Resin', 'CEREALS', 'Rice', 'Metal']
+		var product = ['PVC Resin', 'Cereals', 'Rice', 'Metal']
 		var hs4Or8_c = ['10410', '10511', '10641', '110311', '110412', '110319', '27149010', '27149030']
 		var example_tags = document.querySelector('.example_tags');
 
@@ -381,7 +385,7 @@ table.page.loadMore();
 					const element = product[index];
 
 					html0 += `
-					<li class="exple_text">${element}</li>
+					<li class="exple_text">${element},</li>
 				`
 
 				}
@@ -394,7 +398,7 @@ table.page.loadMore();
 					const element = hscode[index];
 
 					html1 += `
-					<li class="exple_text">${element}</li>
+					<li class="exple_text">${element},</li>
 				`
 
 				}
@@ -406,7 +410,7 @@ table.page.loadMore();
 					const element = hs4Or8_c[index];
 
 					html2 += `
-					<li class="exple_text">${element}</li>
+					<li class="exple_text">${element},</li>
 				`
 
 				}
