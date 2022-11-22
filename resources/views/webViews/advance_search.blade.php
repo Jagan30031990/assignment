@@ -1,11 +1,11 @@
-@extends('layout.layout') @section('title','Exim Pulse')
+@extends('layout.inner_layout') @section('title','Exim Pulse')
 @section('content')
 
 
 
 
 <!--begin::Container-->
-<div id="kt_content_container" class="container-xxl">
+<div id="kt_content_container" class="container-xxl container-xxl-full-width">
 
     <!--begin::Card-->
     <div class="card card_box">
@@ -16,11 +16,11 @@
 
             </div>
             <form class="common_form_box">
-                <div class="form-group row mb-5">
+                <div class="form-group row">
                     
-                    <div class="col-md-12 mb-5">
+                    <div class="col-md-3">
                         <label class="form-label">Select Country:</label>
-                        <select class="form-select" data-kt-repeater="select2" data-placeholder="Select an option">
+                        <select class="form-select input_padding_common" data-kt-repeater="select2" data-placeholder="Select an option">
 
                             <optgroup label="Alaskan/Hawaiian Time Zone">
                                 <option value="AK">Alaska</option>
@@ -87,9 +87,9 @@
 
                         </select>
                     </div>
-                    <div class="col-md-3 mb-2">
+                    <div class="col-md-3 ">
                         <label class="form-label">Period:</label>
-                        <select class="form-select" data-kt-repeater="select2" data-placeholder="Select an option">
+                        <select class="form-select input_padding_common" data-kt-repeater="select2" data-placeholder="Select an option">
                             <option></option>
                             <option value="6">Last 30 Days</option>
                             <option value="3">Last Month</option>
@@ -103,20 +103,20 @@
 
                         </select>
                     </div>
-                    <div class="col-md-3 mb-2">
+                    <div class="col-md-3 ">
                         <label class="form-label">Start Date:</label>
-                        <input class="form-control" data-kt-repeater="datepicker" placeholder="Pick a date" />
+                        <input class="form-control input_padding_common" data-kt-repeater="datepicker" placeholder="Pick a date" />
                     </div>
-                    <div class="col-md-3 mb-2">
+                    <div class="col-md-3 ">
                         <label class="form-label">End Date:</label>
-                        <input class="form-control" data-kt-repeater="datepicker" placeholder="Pick a date" />
+                        <input class="form-control input_padding_common" data-kt-repeater="datepicker" placeholder="Pick a date" />
                     </div>
 
                 </div>
-                <div class="form-group row mb-5">
+                <div class="form-group row">
                     <div class="col-md-3">
                         <label class="form-label">Search Field:</label>
-                        <select class="form-select" data-kt-repeater="select2" data-placeholder="Select an option">
+                        <select class="form-select input_padding_common" data-kt-repeater="select2" data-placeholder="Select an option">
                             <option></option>
                             <option value="productDesc">Product</option>
                             <option value="hSCode">HS 2</option>
@@ -127,8 +127,8 @@
                         </select>
                     </div>
                     <div class="col-md-3">
-                        <label class="form-label">Operator:</label>
-                        <select class="form-select" data-kt-repeater="select2" data-placeholder="Select an option">
+                        <label class="form-label ">Operator:</label>
+                        <select class="form-select input_padding_common" data-kt-repeater="select2" data-placeholder="Select an option">
                             <option></option>
                             <option value="contains">Contains</option>
                             <option value="equal">Exact phrase</option>
@@ -137,8 +137,8 @@
                     </div>
 
                     <div class="col-md-4">
-                        <label class="form-label">Tags:</label>
-                        <input class="form-control" data-kt-repeater="tagify" value="tag1, tag2, tag3" />
+                        <label class="form-label ">Tags:</label>
+                        <input class="form-control input_padding_common" data-kt-repeater="tagify" value="tag1, tag2, tag3" />
                     </div>
 
                 </div>
@@ -148,10 +148,10 @@
                     <div class="form-group">
                         <div data-repeater-list="kt_docs_repeater_advanced">
                             <div data-repeater-item>
-                                <div class="form-group row mb-5">
+                                <div class="form-group row">
                                     <div class="col-md-2">
                                         <label class="form-label">Search Operator:</label>
-                                        <select class="form-select" data-kt-repeater="select2" data-placeholder="Select an option">
+                                        <select class="form-select input_padding_common" data-kt-repeater="select2" data-placeholder="Select an option">
                                             <option></option>
                                             <option value="And">And</option>
                                             <option value="Or">Or</option>
@@ -160,7 +160,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <label class="form-label">Search Field:</label>
-                                        <select class="form-select" data-kt-repeater="select2" data-placeholder="Select an option">
+                                        <select class="form-select input_padding_common" data-kt-repeater="select2" data-placeholder="Select an option">
                                             <option></option>
                                             <option value="0">Select</option>
                                             <option value="productDesc">Product</option>
@@ -178,7 +178,7 @@
                                     </div>
                                     <div class="col-md-2">
                                         <label class="form-label">Operator:</label>
-                                        <select class="form-select" data-kt-repeater="select2" data-placeholder="Select an option">
+                                        <select class="form-select input_padding_common" data-kt-repeater="select2" data-placeholder="Select an option">
                                             <option></option>
                                             <option value="contains">Contains</option>
                                             <option value="equal">Exact phrase</option>
@@ -187,12 +187,15 @@
                                     </div>
                                     <div class="col-md-4">
                                         <label class="form-label">Tags:</label>
-                                        <input class="form-control" data-kt-repeater="tagify" value="tag1, tag2, tag3" />
+                                        <input class="form-control input_padding_common" data-kt-repeater="tagify" value="tag1, tag2, tag3" />
                                     </div>
                                     <div class="col-md-1">
                                         <a href="javascript:;" data-repeater-delete class="btn btn-sm btn-light-danger mt-3 mt-md-9">
                                             <i class="la la-trash-o fs-3"></i>
                                         </a>
+                                    </div>
+                                    <div class="col-12">
+
                                     </div>
                                 </div>
                             </div>

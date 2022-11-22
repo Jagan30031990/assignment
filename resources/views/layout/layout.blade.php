@@ -55,11 +55,7 @@ License: For each use you must have a valid license purchased only from above li
                     <!--end::Header-->
                     <!--begin::Content-->
                     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-                        <!--begin::Toolbar-->
-                        @section('topbar')
-                      @include('layout.topbar')
-                        @show
-                        <!--end::Toolbar-->
+                       
                         <!--begin::Post-->
                         <div class="post d-flex flex-column-fluid" id="kt_post">
                             <!--begin::Container-->
