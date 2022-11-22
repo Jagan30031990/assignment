@@ -29,7 +29,7 @@ Route::get('/home-page', [LoginController::class, 'home_page'])->name('admin.ind
 });
 
 Route::get('/autocomplete', [LoginController::class, 'autocomplete'])->name('autocomplete');
-Route::post('/get_search_data', [LoginController::class, 'filter_data'])->name('search.filter');
+Route::get('/get_search_data', [LoginController::class, 'filter_data'])->name('search.filter');
 
 Route::get('google', [SocialiteAuthController::class, 'googleRedirect'])->name('auth/google');
 Route::get('/auth/google-callback', [SocialiteAuthController::class, 'loginWithGoogle']);
