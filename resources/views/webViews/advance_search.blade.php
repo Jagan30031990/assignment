@@ -138,7 +138,7 @@
 
                     <div class="col-md-4">
                         <label class="form-label ">Tags:</label>
-                        <input class="form-control input_padding_common" data-kt-repeater="tagify" value="tag1, tag2, tag3" />
+                        <input class="form-control" data-kt-repeater="tagify" value="tag1, tag2, tag3" />
                     </div>
 
                 </div>
@@ -187,7 +187,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <label class="form-label">Tags:</label>
-                                        <input class="form-control input_padding_common" data-kt-repeater="tagify" value="tag1, tag2, tag3" />
+                                        <input class="form-control" data-kt-repeater="tagify" value="tag1, tag2, tag3" />
                                     </div>
                                     <div class="col-md-1">
                                         <a href="javascript:;" data-repeater-delete class="btn btn-sm btn-light-danger mt-3 mt-md-9">
