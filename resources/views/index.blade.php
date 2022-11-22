@@ -14,15 +14,15 @@
 				<!--begin::Compact form-->
 				<div class="d-flex align-items-center">
 					<div class="position-relative w-md-250px me-md-2">
-						<select class="form-select input_padding_common  search_product" data-kt-repeater="select2" on data-placeholder="Select an option">
-							<option>Search Field</option>
-							<option value="productDesc">Product</option>
-							<option value="hSCode">HS 2</option>
-							<option value="hs4Or8">HS 4, 6 Or 8</option>
+						<select class="form-select search_product" data-kt-repeater="select2" on data-placeholder="Select an option" id="product_data" name="product_data" value="{{request('product_data')}}" required>
+							<option value="">Search Field</option>
+							<option value="productDesc" <?php echo (isset($_POST['product_data']) && $_POST['product_data'] == 'productDesc')?'selected="selected"':''?>>Product</option>
+							<option value="hSCode" <?php echo (isset($_POST['product_data']) && $_POST['product_data'] == 'hSCode')?'selected="selected"':''?>>HS 2</option>
+							<option value="hs4Or8" <?php echo (isset($_POST['product_data']) && $_POST['product_data'] == 'hs4Or8')?'selected="selected"':''?>>HS 4, 6 Or 8</option>
 							<!-- <option value="GlobalImporter">Consignee Name</option>
                             <option value="GlobalExporter">Shipper Name</option>
                             <option value="GlobalCompany">Company Name</option> -->
-						</select>
+                        </select>
 					</div>
 					<!--begin::Input group-->
 					<div class="position-relative w-md-400px me-md-2">
@@ -36,13 +36,13 @@
 						<!--end::Svg Icon-->
 						<!-- <input type="text" class="form-control form-control-solid ps-10 typeahead" name="search_data" value="{{request('search_data')}}" placeholder="Search" /> -->
 
-						<input class="typeahead form-control input_padding_common  form-control-solid ps-10" type="text" name="search_data" value="{{request('search_data')}}">
+					<input class="typeahead form-control  form-control-solid ps-10"  data-placeholder="Please enter details of _" type="text" name="search_data" id="data_field" value="{{request('search_data')}}" required>
 
 					</div>
 					<!--end::Input group-->
 					<!--begin:Action-->
 					<div class="d-flex align-items-center">
-						<button type="submit" class="btn btn-sm common_btn_one me-2">Search</button>
+						<button type="submit" id="submit_search" class="btn btn-sm common_btn_one me-2">Search</button>
 						<a id="kt_horizontal_search_advanced_link" class="btn btn-sm common_btn_one" href="#kt_advanced_search_form">Advanced Search</a>
 					</div>
 					<!--end:Action-->
@@ -453,5 +453,33 @@ table.page.loadMore();
 			tags: false // создает новые опции на лету
 		});
 	})
+</script>
+<script>
+	$('#product_data').change(function(){
+		const dbText = $(this).find(':selected').text();
+		$('#data_field').attr('placeholder', function(){
+			return $(this).data('placeholder').replace('_', dbText)
+		});
+	}).change()
+</script>
+<script>
+	$('#submit_search').click(function () {
+		data_field = $('#data_field').val();
+		product_data = $('#data_field').val();
+		if (data_field == "" && product_data == "") {
+			$('#data_field').prop("required", true);
+			$('#product_data').prop("required", true);
+		} else {
+			$('#data_field').prop("required", false);
+			$('#product_data').prop("required", false);
+		}
+	});
+</script>
+<script>
+	function search_data() {
+		var inputBox = document.getElementById('data_field');
+		this.value == 'hSCode' || this.value == 'hs4Or8' ? inputBox.type = 'number' : inputBox.type = 'text'; 
+	}
+	document.getElementById('product_data').addEventListener('change', search_data);
 </script>
 @endsection
