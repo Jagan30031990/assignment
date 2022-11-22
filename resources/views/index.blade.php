@@ -522,7 +522,8 @@
 			console.log($(this).val())
 		});
 
-		$(".export_import").select2({
+		$(document).ready(function(){
+			$(".export_import").select2({
 			closeOnSelect: false,
 			placeholder: "Export Import",
 			allowHtml: true,
@@ -550,6 +551,7 @@
 			allowClear: true,
 			tags: false // создает новые опции на лету
 		});
+		})
 </script>
 <script>
 	$('#product_data').change(function() {
