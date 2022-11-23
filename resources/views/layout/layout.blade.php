@@ -50,6 +50,7 @@ License: For each use you must have a valid license purchased only from above li
                 <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
                     <!--begin::Header-->
                     @section('header')
+                    
                 @include('layout.header')
                 @show
                     <!--end::Header-->
