@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Auth;
 use DB;
 use Captcha;
+use Session;
 use DataTables;
 use App\Models\ExportIndia;
 use App\Models\HSCode;
@@ -23,14 +24,26 @@ class LoginController extends Controller
     }
     public function autocomplete(Request $request)
     {
-        $datas = HSCode::select('product_name','hs_code')
-        ->where('product_name','LIKE',$request->input('query').'%')->take(10)->get();      
+        $data_check = $request->input('query');
         $dataModified = array();
-
-        foreach ($datas as $data)
+        if(is_numeric($data_check))
         {
-            $dataModified[] = $data->product_name;
-        }        
+            $datas = HSCode::select('product_name')
+            ->where('hs_code', $data_check)->get(); 
+            foreach ($datas as $data)
+            {
+                $dataModified[] = $data->product_name;
+            }        
+        }
+        else
+        {
+            $datas = HSCode::select('product_name')
+            ->where('product_name','LIKE',$request->input('query').'%')->take(10)->get();     
+            foreach ($datas as $data)
+            {
+                $dataModified[] = $data->product_name;
+            }        
+        }
 
         return response()->json($dataModified);
 
@@ -38,25 +51,23 @@ class LoginController extends Controller
     public function filter_data(Request $request)
     {
        $words = $request->search_data;
+       session(['words_key' => $words ]);
        if(is_numeric($request->search_data))
        {
-       
-            $data = ExportIndia::where('hs_code',$words)->get();
-            return response()->json($data);
-        
+
+        $data = ExportIndia::where('hs_code',$words)->get();
+        return response()->json($data);                
 
     }
     else
     {
 
         $data = ExportIndia::where('product_description','LIKE',$words.'%')->get();
-        return response()->json($data);
-     
+        return response()->json($data);                
+    }
 
-    
-}
-$count_of_data = ExportIndia::count();
-return view('index', compact('count_of_data'));
+    $count_of_data = ExportIndia::count();
+    return view('index', compact('count_of_data'));
 }
 public function refresh_captcha()
 {

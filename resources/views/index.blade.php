@@ -2,6 +2,12 @@
 
 @section('content')
 <!--begin::Container-->
+<style>
+	.error
+	{
+		color:red !important;
+	}
+</style>
 <div id="kt_content_container" class="container-xxl">
 	<!--begin::Form-->
 	<form id="ajax-contact-form" action="javascript:void(0)" method="POST">
@@ -14,8 +20,8 @@
 				<!--begin::Compact form-->
 				<div class="d-flex align-items-center">
 					<div class="position-relative w-md-250px me-md-2">
-						<select class="form-select input_padding_common search_product" data-kt-repeater="select2" on data-placeholder="Select an option" id="product_data" name="product_data" value="{{request('product_data')}}" required>
-							<option value="">Search Field</option>
+						<select class="form-select input_padding_common search_product" data-kt-repeater="select2" on data-placeholder="Select an option" id="product_data" name="product_data" required>
+							<option value="">Search Category</option>
 							<option value="productDesc">Product</option>
 							<option value="hSCode">HS 2</option>
 							<option value="hs4Or8">HS 4, 6 Or 8</option>
@@ -47,24 +53,27 @@
 					</div>
 					<!--end::Input group-->
 					<!--begin:Action-->
+					<div id="loader" style="display:none;">@include('layout.loader')</div>
 					<div class="d-flex align-items-center">
-						<button type="submit" id="submit_search" class="btn btn-sm common_btn_one me-2 btn-submit" onclick="show_close();">Search</button>
+						<button type="submit" id="submit_search" class="btn btn-sm common_btn_one me-2 btn-submit">Search</button>
 
-						<a id="kt_horizontal_search_advanced_link" class="btn btn-sm common_btn_one" href="#kt_advanced_search_form">Advanced Search</a>
+						<a id="kt_horizontal_search_advanced_link" class="btn btn-sm common_btn_one advanced-search" style="display:none;" href="{{route('webViews.advance_search')}}">Advanced Search</a>
 
 					</div>
 					<!--end:Action-->
 				</div>
-				<div class="tag_example">
-					<h3>Search Example:</h3>
-					<ul class="example_tags">
+			</form>
+			<div class="tag_example">
+				<h3>Search Example:</h3>
+				<ul class="example_tags">
 
-					</ul>
-				</div>
-				<!--end::Compact form-->
-				<!--begin::Advance form-->
+				</ul>
+			</div>
 
-				<div class="collapse filter_data show" id="kt_advanced_search_form">
+			<!--end::Compact form-->
+			<!--begin::Advance form-->
+			<form id="ajax-search-form" action="javascript:void(0)" method="POST">
+				<div class="collapse filter_data" id="kt_advanced_search_form">
 					<!--begin::Separator-->
 					<div class="separator separator-dashed mt-4 mb-4"></div>
 					<!--end::Separator-->
@@ -82,9 +91,9 @@
 								<div class="col-lg-2 col-md-2 col-sm-4">
 
 									<!--begin::Select-->
-									<select class="export_import input_padding_common_tow form-select  multiselect_class" multiple="multiple">
-										<option value="O1" data-badge="">Export</option>
-										<option value="O2" data-badge="">Import</option>
+									<select class="export_import input_padding_common_tow form-select  multiselect_class" name="export_type" multiple="multiple">
+										<option value="Export" data-badge="">Export</option>
+										<option value="Import" data-badge="">Import</option>
 
 									</select>
 									<!--end::Select-->
@@ -93,17 +102,17 @@
 								<!--begin::Col-->
 								<div class="col-lg-3 col-md-3 col-sm-4">
 									<!--begin::Select-->
-									<select class="country_select input_padding_common_tow form-select  multiselect_class" multiple="multiple">
+									<select class="country_select input_padding_common_tow form-select multiselect_class" name="country_select[]" multiple="multiple">
 
-										<option value="O1" data-badge="">India</option>
-										<option value="O2" data-badge="">USA</option>
+										<option value="India" data-badge="">India</option>
+										<option value="USA" data-badge="">USA</option>
 
 									</select>
 									<!--end::Col-->
 								</div>
 								<div class="col-lg-3 col-md-3 col-sm-4">
 									<!--begin::Select-->
-									<select class="hscode form-select input_padding_common_tow multiselect_class" multiple="multiple">
+									<select class="hscode form-select input_padding_common_tow multiselect_class" multiple="multiple" name="hs_code">
 
 										<option value="O1" data-badge="">25</option>
 										<option value="O2" data-badge="">45</option>
@@ -113,7 +122,7 @@
 								</div>
 								<div class="col-lg-3 col-md-3 col-sm-4">
 									<!--begin::Select-->
-									<select class="year_select form-select input_padding_common_tow multiselect_class" multiple="multiple">
+									<select class="year_select form-select input_padding_common_tow multiselect_class" multiple="multiple" name="year">
 
 										<option value="O1" data-badge="">2022</option>
 										<option value="O2" data-badge="">2021</option>
@@ -136,12 +145,12 @@
 					</div>
 					<!--end::Advance form-->
 				</div>
-
-				<!--end::Card body-->
-			</div>
-			<!--end::Card-->
+			</form>
+			<!--end::Card body-->
 		</div>
-	</form>
+		<!--end::Card-->
+	</div>
+	
 	<!--end::Form-->
 	<!--begin::Tab Content-->
 	<div class="tab-content">
@@ -149,7 +158,7 @@
 		<!--begin::Tab pane-->
 		<div id="kt_project_users_table_pane" class="tab-pane fade show active">
 			<!--begin::Card-->
-			<div class="card card-flush">
+			<div class="card card-flush import-data-table">
 				<!--begin::Card body-->
 				<div class="card-body pt-0 common_card_body">
 					<!--begin::Table container-->
@@ -169,7 +178,7 @@
 								<!--begin::Search-->
 								<div class="d-flex align-items-center position-relative">
 
-									<h3 class="fw-bolder me-5 my-1">Showing 1 to  of  records
+									<h3 class="fw-bolder me-5 my-1">
 										<!-- <span class="text-gray-400 fs-6">records</span> -->
 									</h3>
 								</div>
@@ -205,7 +214,7 @@
 					<table id="example1" class="table table-row-bordered table-row-dashed gy-4 same_table_design align-middle fw-bolder" style="border: none !important;" cellspacing="0" width="100%">
 						<thead class="fs-7 text-gray-400 text-uppercase">
 							<tr>
-								<th class="min-w-50px">ID</th>
+								<th class="min-w-100px">SL.No</th>
 								<th class="min-w-100px">Data Type</th>
 								<th class="min-w-100px">Country</th>
 								<th class="min-w-200px">Consignment Type</th>
@@ -240,220 +249,55 @@
 							</tr>
 						</thead>
 						<tbody>
-    				<!-- @php $i=1;@endphp
-    				@if(!empty($exported_data) && $exported_data->count())
-    				@foreach($exported_data as $key => $value)
-    				<tr>
-    				<td>{{$i++}}</td>
-    				<td>{{$value->data_type}}</td>
-    				<td>{{$value->country}}</td>
-    				<td>{{$value->consignment_type}}</td>
-    				<td>{{$value->consignment_period}}</td>
-    				<td>{{$value->shipment_month}}</td>
-    				<td>{{$value->port_of_loading}}</td>
-    				<td>{{$value->mode_of_shipment}}</td>
-    				<td>{{$value->port_code}}</td>
-    				<td>{{$value->sbill_no}}</td>
-    				<td>{{$value->sbill_date}}</td>
-    				<td>{{$value->shipment_id}}</td>
-    				<td>{{$value->shipment_date}}</td>
-    				<td>{{$value->hs_code}}</td>
-    				<td>{{$value->product_description}}</td>
-    				<td>{{$value->quantity}}</td>
-    				<td>{{$value->uqc}}</td>
-    				<td>{{$value->invoice_unit_rate_fc}}</td>
-    				<td>{{$value->invoice_currency}}</td>
-    				<td>{{$value->unit_value_inr}}</td>
-    				<td>{{$value->total_fob_value_inr}}</td>
-    				<td>{{$value->invoice_no}}</td>
-    				<td>{{$value->port_code_discharge}}</td>
-    				<td>{{$value->country_destination}}</td>
-    				<td>{{$value->consignee_id}}</td>
-    				<td>{{$value->consignee_name}}</td>
-    				<td>{{$value->consignee_address}}</td>
-    				<td>{{$value->consignee_country}}</td>
-    				<td>{{$value->cha_code}}</td>
-    				<td>{{$value->cha_name}}</td>
-    				<td>{{$value->iec}}</td>
-    				<td>{{$value->exporter_name}}</td>
-    				</tr>
-    				@endforeach
-    				@else
-    				<tr>
-    				<td colspan="10">There are no data.</td>
-    				</tr>
-    				@endif -->
-    			</tbody>
-    		</table>
-    	</div>
+						</tbody>
+					</table>
+				</div>
 
 
-    </div>
-    <!--end::Card body-->
-    <!--end::Card-->
-</div>
-<!--end::Tab pane-->
-</div>
-<!--end::Tab Content-->
+			</div>
+			<!--end::Card body-->
+			<!--end::Card-->
+		</div>
+		<!--end::Tab pane-->
+	</div>
+	<!--end::Tab Content-->
 </div>
 <!--end::Container-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<!-- <script type="text/javascript">
-	$(function() {
-		$.ajaxSetup({
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			}
-		});
-
-		var table = $('#example1').DataTable({
-			processing: true,
-			serverSide: true,
-			"lengthMenu": [[50,100], [50,100]],
-			"info": false,
-			"scrollY": 450,
-			"scrollX": true,
-			"order": [],
-			"scrollCollapse": true,
-			ajax: "{{ route('search.filter') }}",
-			columns: [{
-				data: 'id',
-				name: 'id'
-			},
-			{
-				data: 'data_type',
-				name: 'data_type'
-			},
-			{
-				data: 'country',
-				name: 'country'
-			},
-			{
-				data: 'consignment_type',
-				name: 'consignment_type'
-			},
-			{
-				data: 'consignment_period',
-				name: 'consignment_period'
-			},
-			{
-				data: 'shipment_month',
-				name: 'shipment_month'
-			},
-			{
-				data: 'port_of_loading',
-				name: 'port_of_loading'
-			},
-			{
-				data: 'mode_of_shipment',
-				name: 'mode_of_shipment'
-			},
-			{
-				data: 'port_code',
-				name: 'port_code'
-			},
-			{
-				data: 'sbill_no',
-				name: 'sbill_no'
-			},
-			{
-				data: 'sbill_date',
-				name: 'sbill_date'
-			},
-			{
-				data: 'shipment_id',
-				name: 'shipment_id'
-			},
-			{
-				data: 'shipment_date',
-				name: 'shipment_date'
-			},
-
-
-			{
-				data: 'hs_code',
-				name: 'hs_code'
-			},
-			{
-				data: 'product_description',
-				name: 'product_description'
-			},
-			{
-				data: 'quantity',
-				name: 'quantity'
-			},
-			{
-				data: 'uqc',
-				name: 'uqc'
-			},
-			{
-				data: 'invoice_unit_rate_fc',
-				name: 'invoice_unit_rate_fc'
-			},
-			{
-				data: 'invoice_currency',
-				name: 'invoice_currency'
-			},
-			{
-				data: 'unit_value_inr',
-				name: 'unit_value_inr'
-			},
-			{
-				data: 'total_fob_value_inr',
-				name: 'total_fob_value_inr'
-			},
-			{
-				data: 'invoice_no',
-				name: 'invoice_no'
-			},
-			{
-				data: 'port_code_discharge',
-				name: 'port_code_discharge'
-			},
-			{
-				data: 'country_destination',
-				name: 'country_destination'
-			},
-			{
-				data: 'consignee_id',
-				name: 'consignee_id'
-			},
-			{
-				data: 'consignee_name',
-				name: 'consignee_name'
-			},
-			{
-				data: 'consignee_address',
-				name: 'consignee_address'
-			},
-			{
-				data: 'consignee_country',
-				name: 'consignee_country'
-			},
-			{
-				data: 'cha_code',
-				name: 'cha_code'
-			},
-			{
-				data: 'cha_name',
-				name: 'cha_name'
-			},
-			{
-				data: 'iec',
-				name: 'iec'
-			},
-			{
-				data: 'exporter_name',
-				name: 'exporter_name'
-			},
-			]
-		});
-	});
-</script> -->
-
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>
-<script type="text/javascript">
+<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet">
+
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+<script>
+$(document).ready(function() {
+    src = "{{ route('autocomplete') }}";
+    $("input.typeahead").autocomplete({
+        select: function (event, ui) {//trigger when you click on the autocomplete item
+            event.preventDefault();//you can prevent the default event
+            alert( ui.item.product_name);//employee id
+            // alert( ui.item.value);//employee name
+
+        },
+        source: function(request, response) {
+            $.ajax({
+                url: src,
+                dataType: "json",
+                data: {
+                    term : request.term
+                },
+                success: function(data) {
+                    response(data);
+
+                }
+            });
+        },
+        minLength: 1,
+
+    });
+});
+</script>
+<!-- <script type="text/javascript">
 	var path = "{{ route('autocomplete') }}";
 	$('input.typeahead').typeahead({
 		source: function(query, process) {
@@ -464,7 +308,7 @@
 			});
 		}
 	});
-</script>
+</script> -->
 <script>
 	var hscode = ['10', '11', '12', '13', '14'];
 	var product = ['PVC Resin', 'Cereals', 'Rice', 'Metal']
@@ -517,8 +361,6 @@
 		} else {
 			$('.tag_example').removeClass('active')
 		}
-
-
 		console.log($(this).val())
 	});
 
@@ -579,7 +421,7 @@
 	function search_data() {
 
 		var inputBox = document.getElementById('data_field');
-		this.value == 'hSCode' || this.value == 'hs4Or8' ? inputBox.type = 'number' : inputBox.type = 'text';
+		this.value == 'hSCode' || this.value == 'hs4Or8' ? inputBox.type = 'text' : inputBox.type = 'text';
 	}
 	document.getElementById('product_data').addEventListener('change', search_data);
 
@@ -591,16 +433,14 @@
 		$('#data_field').val(' ');
 	})
 </script>
-<script>
-	function show_close()
-	{
-		$('#kt_ecommerce_sales_flatpickr_clear_tags').show();		
-	}
-</script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script>
+	$('#kt_ecommerce_sales_flatpickr_clear_tags').click(function() {
+		window.location.reload();		
+	});
+
+</script>
 <script>
 	if ($("#ajax-contact-form").length > 0) {
 		$("#ajax-contact-form").validate({
@@ -609,10 +449,16 @@
 					required: true,
 					maxlength: 500
 				},   
+				product_data: {
+					required: true,
+				},   
 			},
 			messages: {
 				search_data: {
-					required: "Please enter Search Details",
+					required: "Search Data is required",
+				},
+				product_data: {
+					required: "Category Selection is required",
 				},
 			},
 			submitHandler: function(form) {
@@ -621,124 +467,142 @@
 						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 					}
 				});
-				$('#submit').html('Please Wait...');
-				$("#submit"). attr("disabled", true);
+				$("#loader").show();
 				$.ajax({
 					url: "{{route('search.filter')}}",
 					type: "GET",
-					"datatype": 'json',
-					data: $('#ajax-contact-form').serialize(),
+					datatype: 'json',
+					data: $('#ajax-contact-form').serialize(),					
 					success: function(data) {
-						 $('#example1').DataTable({
-						destroy: true,
-						processing: true,
-						serverSide: false,
-						scrollY: 450,
-						scrollX: true,
-						scrollCollapse: true,
-						lengthMenu: [[50,100], [50,100]],
-                        data: data,
-                        columns: [
-                           {
-								data: 'id'
-								
-							},
-							{
-								data: 'data_type'
-							},
-							{
-								data: 'country'
-							},
-							{
-								data: 'consignment_type'
-							},
-							{
-								data: 'consignment_period'
-							},
-							{
-								data: 'shipment_month'
-							},
-							{
-								data: 'port_of_loading'
-							},
-							{
-								data: 'mode_of_shipment'
-							},
-							{
-								data: 'port_code'
-							},
-							{
-								data: 'sbill_no'
-							},
-							{
-								data: 'sbill_date'
-							},
-							{
-								data: 'shipment_id'
-							},
-							{
-								data: 'shipment_date'
-							},
+						console.log(data);
+						if(data=='')
+						{
+							$("#loader").hide();
+							toastr.error('No Data Found!!');					
+							$(".filter_data").removeClass("show");
+							$(".advanced-search").hide();
+						}
+						else
+						{
+							$("#loader").hide();
+							$(".import-data-table").addClass("active");
+							$(".filter_data").addClass("show");
+							$(".advanced-search").show();						
+							$('#example1').DataTable({
+								destroy: true,
+								processing: true,
+								serverSide: false,
+								scrollY: 450,
+								scrollX: true,
+								scrollCollapse: true,
+								lengthMenu: [[50,100], [50,100]],
+								data: data,
+								columns: [
+								{
+									data: 'id',
+									render: function (data, type, row, meta) {
+										return meta.row + meta.settings._iDisplayStart + 1;
+									}
 
-							{
-								data: 'hs_code'
-							},
-							{
-								data: 'product_description'
-							},
-							{
-								data: 'quantity'
-							},
-							{
-								data: 'uqc'
-							},
-							{
-								data: 'invoice_unit_rate_fc'
-							},
-							{
-								data: 'invoice_currency'
-							},
-							{
-								data: 'unit_value_inr'
-							},
-							{
-								data: 'total_fob_value_inr'
-							},
-							{
-								data: 'invoice_no'
-							},
-							{
-								data: 'port_code_discharge'
-							},
-							{
-								data: 'country_destination'
-							},
-							{
-								data: 'consignee_id'
-							},
-							{
-								data: 'consignee_name'
-							},
-							{
-								data: 'consignee_address'
-							},
-							{
-								data: 'consignee_country'
-							},
-							{
-								data: 'cha_code'
-							},
-							{
-								data: 'cha_name'
-							},
-							{
-								data: 'iec'
-							},
-							{
-								data: 'exporter_name'
-							},                       
-                        ]
-                    });						
+								},
+								{
+									data: 'data_type'
+								},
+								{
+									data: 'country'
+								},
+								{
+									data: 'consignment_type'
+								},
+								{
+									data: 'consignment_period'
+								},
+								{
+									data: 'shipment_month'
+								},
+								{
+									data: 'port_of_loading'
+								},
+								{
+									data: 'mode_of_shipment'
+								},
+								{
+									data: 'port_code'
+								},
+								{
+									data: 'sbill_no'
+								},
+								{
+									data: 'sbill_date'
+								},
+								{
+									data: 'shipment_id'
+								},
+								{
+									data: 'shipment_date'
+								},
+
+								{
+									data: 'hs_code'
+								},
+								{
+									data: 'product_description'
+								},
+								{
+									data: 'quantity'
+								},
+								{
+									data: 'uqc'
+								},
+								{
+									data: 'invoice_unit_rate_fc'
+								},
+								{
+									data: 'invoice_currency'
+								},
+								{
+									data: 'unit_value_inr'
+								},
+								{
+									data: 'total_fob_value_inr'
+								},
+								{
+									data: 'invoice_no'
+								},
+								{
+									data: 'port_code_discharge'
+								},
+								{
+									data: 'country_destination'
+								},
+								{
+									data: 'consignee_id'
+								},
+								{
+									data: 'consignee_name'
+								},
+								{
+									data: 'consignee_address'
+								},
+								{
+									data: 'consignee_country'
+								},
+								{
+									data: 'cha_code'
+								},
+								{
+									data: 'cha_name'
+								},
+								{
+									data: 'iec'
+								},
+								{
+									data: 'exporter_name'
+								},                       
+								]
+							});				
+						}
+
 
 					}
 				});
@@ -746,30 +610,159 @@
 		})
 	}
 </script>
-    				<!-- <script type="text/javascript">
-    				
-    				$.ajaxSetup({
-    				headers: {
-    				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    				}
-    				});
-    				
-    				$(".btn-submit").click(function(e){  \
-    				alert('hello');
-    				e.preventDefault();   
-    				var name = $("input[name=name]").val();
-    				var password = $("input[name=password]").val();
-    				var email = $("input[name=email]").val();
-    				
-    				$.ajax({
-    				type:'POST',
-    				url:"{{ route('search.filter') }}",
-    				data:{name:name, password:password, email:email},
-    				success:function(data){
-    				alert(data.success);
-    				}
-    				});
-    				
-    				});
-    			</script> -->
-    			@endsection
+<script>
+	$("#ajax-search-form button").on('click', function(){
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+		$("#loader").show();
+		$.ajax({
+			url: "{{route('search-filter-data')}}",
+			type: "GET",
+			datatype: 'json',
+			data: $('#ajax-search-form').serialize(),					
+			success: function(data) {
+				console.log(data);
+				if(data=='')
+				{
+					$("#loader").hide();							
+					toastr.error('No Data Found!!');					
+					$(".filter_data").addClass("show");
+					$(".advanced-search").show();
+					$('#example1').DataTable({
+							"destroy": true,
+							"data": [],
+							"total": 0,
+							"recordsTotal": 0,
+							"recordsFiltered": 0
+						
+					});				
+				}
+				else
+				{
+					$("#loader").hide();
+					$(".import-data-table").addClass("active");
+					$(".filter_data").addClass("show");
+					$(".advanced-search").show();						
+					$('#example1').DataTable({
+						destroy: true,
+						processing: true,
+						scrollY: 450,
+						scrollX: true,
+						scrollCollapse: true,
+						lengthMenu: [[50,100], [50,100]],
+						data: data,
+						columns: [
+						{
+							data: 'id',
+							render: function (data, type, row, meta) {
+								return meta.row + meta.settings._iDisplayStart + 1;
+							}
+
+						},
+						{
+							data: 'data_type'
+						},
+						{
+							data: 'country'
+						},
+						{
+							data: 'consignment_type'
+						},
+						{
+							data: 'consignment_period'
+						},
+						{
+							data: 'shipment_month'
+						},
+						{
+							data: 'port_of_loading'
+						},
+						{
+							data: 'mode_of_shipment'
+						},
+						{
+							data: 'port_code'
+						},
+						{
+							data: 'sbill_no'
+						},
+						{
+							data: 'sbill_date'
+						},
+						{
+							data: 'shipment_id'
+						},
+						{
+							data: 'shipment_date'
+						},
+
+						{
+							data: 'hs_code'
+						},
+						{
+							data: 'product_description'
+						},
+						{
+							data: 'quantity'
+						},
+						{
+							data: 'uqc'
+						},
+						{
+							data: 'invoice_unit_rate_fc'
+						},
+						{
+							data: 'invoice_currency'
+						},
+						{
+							data: 'unit_value_inr'
+						},
+						{
+							data: 'total_fob_value_inr'
+						},
+						{
+							data: 'invoice_no'
+						},
+						{
+							data: 'port_code_discharge'
+						},
+						{
+							data: 'country_destination'
+						},
+						{
+							data: 'consignee_id'
+						},
+						{
+							data: 'consignee_name'
+						},
+						{
+							data: 'consignee_address'
+						},
+						{
+							data: 'consignee_country'
+						},
+						{
+							data: 'cha_code'
+						},
+						{
+							data: 'cha_name'
+						},
+						{
+							data: 'iec'
+						},
+						{
+							data: 'exporter_name'
+						},                       
+						]
+					});				
+				}
+
+
+			}
+		});
+	});
+</script>
+@endsection

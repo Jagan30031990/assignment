@@ -3,7 +3,7 @@
                     <!--begin::Brand-->
                     <div class="aside-logo flex-column-auto" id="kt_aside_logo">
                         <!--begin::Logo-->
-                        <a href="#">
+                        <a href="{{route('admin.index')}}">
                             <img alt="Logo" src="{{asset('assets/images/logo-8-light.png')}}" class="h-35px logo" />
                         </a>
                         <!--end::Logo-->

@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\SocialiteAuthController;
 use App\Http\Controllers\ExportIndiaController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,13 @@ Route::get('google', [SocialiteAuthController::class, 'googleRedirect'])->name('
 Route::get('/auth/google-callback', [SocialiteAuthController::class, 'loginWithGoogle']);
 
 Route::get('/refresh_captcha', [LoginController::class, 'refresh_captcha'])->name('users.captcha');
+
+Route::get('/search_filter', [SearchController::class, 'serach_data'])->name('search-filter-data');
+
+
+
+
+
 Route::get('/', [LoginController::class, 'index'])->name('admin.login');
 Route::get('/export_india', [ExportIndiaController::class, 'show'])->name('users.export');
 Route::post('chklogin', [LoginController::class, 'chklogin'])->name('admin.chklogin');
