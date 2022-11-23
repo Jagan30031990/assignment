@@ -91,7 +91,7 @@
 								<div class="col-lg-2 col-md-2 col-sm-4">
 
 									<!--begin::Select-->
-									<select class="export_import input_padding_common_tow form-select  multiselect_class" name="export_type" multiple="multiple">
+									<select class="export_import input_padding_common_tow form-select  multiselect_class" name="export_type[]" multiple="multiple">
 										<option value="Export" data-badge="">Export</option>
 										<option value="Import" data-badge="">Import</option>
 
@@ -269,7 +269,7 @@
 <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet">
 
 <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
-<script>
+<!-- <script>
 $(document).ready(function() {
     src = "{{ route('autocomplete') }}";
     $("input.typeahead").autocomplete({
@@ -296,7 +296,7 @@ $(document).ready(function() {
 
     });
 });
-</script>
+</script> -->
 <!-- <script type="text/javascript">
 	var path = "{{ route('autocomplete') }}";
 	$('input.typeahead').typeahead({
@@ -309,6 +309,24 @@ $(document).ready(function() {
 		}
 	});
 </script> -->
+<script>
+	$("#data_field").on("keydown", function(e) {
+		var dropdown = $("#product_data").val();
+		var inputValue = $(this).val();	
+		if(dropdown === "hSCode") {
+			if(inputValue >= 12){
+				toastr.error('Please enter only 2 digit HS CODE!!');
+				$(this).val("");
+			}
+		} else  if(dropdown === "hs4Or8") {
+			if(inputValue >= 9999999){
+				toastr.error('Please enter only 4,6,8 digit HS CODE!!');
+				$(this).val("");
+			}
+		}
+	});
+</script>
+
 <script>
 	var hscode = ['10', '11', '12', '13', '14'];
 	var product = ['PVC Resin', 'Cereals', 'Rice', 'Metal']
@@ -632,11 +650,11 @@ $(document).ready(function() {
 					$(".filter_data").addClass("show");
 					$(".advanced-search").show();
 					$('#example1').DataTable({
-							"destroy": true,
-							"data": [],
-							"total": 0,
-							"recordsTotal": 0,
-							"recordsFiltered": 0
+						"destroy": true,
+						"data": [],
+						"total": 0,
+						"recordsTotal": 0,
+						"recordsFiltered": 0
 						
 					});				
 				}
@@ -765,4 +783,33 @@ $(document).ready(function() {
 		});
 	});
 </script>
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script>
+	var path = "{{ route('autocomplete') }}";	
+	$( "#data_field" ).autocomplete({
+		source: function( request, response ) {
+			$.ajax({
+				url: path,
+				type: 'GET',
+				dataType: "json",
+				data: {
+					search: request.term
+				},
+				success: function( data ) {
+					response( data );
+				}
+			});
+		},
+		select: function (event, ui) {
+			$('#data_field').val(ui.item.label);
+			console.log(ui.item); 
+			return false;
+		}
+	});
+
+</script>
+
 @endsection
