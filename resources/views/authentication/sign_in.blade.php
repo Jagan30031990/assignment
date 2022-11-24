@@ -33,7 +33,7 @@
 	</a>
 	<!--end::Logo-->
 	<!--begin::Title-->
-	<h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #fff;">Welcome to Exim Pluse</h1>
+	<h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #fff;">Welcome to Exim Pulse</h1>
 	<!--end::Title-->
 	<!--begin::Description-->
 	<p class="fw-bold fs-2" style="color: #fff;">In this kind of post, the bloggerintroduces a person they’ve interviewed and provides some background information about the intervieweeand their work following this is a transcript of the interview.</p>

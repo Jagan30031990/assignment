@@ -28,17 +28,17 @@ class LoginController extends Controller
         $dataModified = array();
         if(is_numeric($data_check))
         {   
-            $datas = HSCode::select('product_name')
-            ->where('hs_code', $data_check)->get(); 
+            $datas = HSCode::select('product_name','hs_code')
+            ->where('hs_code', $data_check)->take(300)->get(); 
             foreach ($datas as $data)
             {
-                $dataModified[] = $data->product_name;
+                $dataModified[] = '(HS-CODE'.'-'.$data->hs_code.') '.$data->product_name;
             }        
         }
         else
         {
             $datas = HSCode::select('product_name')
-            ->where('product_name','LIKE',$request->input('query').'%')->take(10)->get();     
+            ->where('product_name','LIKE','%'.$data_check.'%')->take(300)->get();     
             foreach ($datas as $data)
             {
                 $dataModified[] = $data->product_name;
@@ -51,18 +51,35 @@ class LoginController extends Controller
     public function filter_data(Request $request)
     {
        $words = $request->search_data;
+       $stripped = str_replace(array(',','.', '"'), '', $words);
+       $values = explode(" ", $stripped);
        session(['words_key' => $words ]);
-       if(is_numeric($request->search_data))
+       if(is_numeric($words))
        {
-
-        $data = ExportIndia::where('hs_code',$words)->get();
+        $data = ExportIndia::where('hs_code',$words)->take(2000)->get();
         return response()->json($data);                
 
     }
     else
     {
+        // DB::enableQueryLog();
 
-        $data = ExportIndia::where('product_description','LIKE','%'.$words.'%')->get();
+    $data = ExportIndia::query()
+    ->where(function ($query) use ($values) {
+        foreach ($values as $term) {
+            // Loop over the terms and do a search for each.
+            $query->orWhere('product_description', 'like', '%' . $term . '%');
+        }
+    })->take(2000)->get();
+
+
+        // $data = ExportIndia::where('product_description','LIKE' , $values.'%')->get();
+        // die($data);
+//        $query = DB::getQueryLog();
+
+// print_r($query);
+// die();
+        
         return response()->json($data);                
     }
 

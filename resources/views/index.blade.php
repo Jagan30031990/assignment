@@ -39,7 +39,7 @@
 						<!--end::Svg Icon-->
 						<!-- <input type="text" class="form-control form-control-solid ps-10 typeahead" name="search_data" value="{{request('search_data')}}" placeholder="Search" /> -->
 
-						<input class="typeahead search_p form-control  form-control-solid ps-10" data-placeholder="Please enter details of _" type="text" name="search_data" id="data_field" required>
+						<input class="typeahead search_p form-control  form-control-solid ps-10" data-placeholder="Please enter details of _" type="text" autofocus="autofocus" name="search_data" id="data_field" required>
 						<button class="btn btn-sm btn-icon btn-light" id="kt_ecommerce_sales_flatpickr_clear_tags">
 							<!--begin::Svg Icon | path: icons/duotune/arrows/arr088.svg-->
 							<span class="svg-icon svg-icon-2">
@@ -249,6 +249,7 @@
 							</tr>
 						</thead>
 						<tbody>
+
 						</tbody>
 					</table>
 				</div>
@@ -299,27 +300,34 @@ $(document).ready(function() {
 </script> -->
 <!-- <script type="text/javascript">
 	var path = "{{ route('autocomplete') }}";
-	$('input.typeahead').typeahead({
+	$('input.typeahead').autocomplete({
 		source: function(query, process) {
 			return $.get(path, {
 				query: query
 			}, function(data) {
+				console.log(data);
 				return process(data);
 			});
 		}
 	});
 </script> -->
 <script>
-	$("#data_field").on("keydown", function(e) {
+	$("#data_field").on("blur", function(e) {
 		var dropdown = $("#product_data").val();
 		var inputValue = $(this).val();	
 		if(dropdown === "hSCode") {
-			if(inputValue >= 12){
+			if(inputValue.length > 2 || inputValue.length < 2){
 				toastr.error('Please enter only 2 digit HS CODE!!');
 				$(this).val("");
 			}
-		} else  if(dropdown === "hs4Or8") {
-			if(inputValue >= 9999999){
+		} else if(dropdown === "hs4Or8") {
+		   if(inputValue.length > 8)
+			{
+				toastr.error('Please enter only 4,6,8 digit HS CODE!!');
+				$(this).val("");
+			}
+			else if(inputValue.length <=3)
+			{
 				toastr.error('Please enter only 4,6,8 digit HS CODE!!');
 				$(this).val("");
 			}
@@ -349,6 +357,7 @@ $(document).ready(function() {
 				`
 
 			}
+			$('#data_field').val('');
 			example_tags.innerHTML = html0;
 			product = [];
 		} else if ($(this).val() == 'hSCode') {
@@ -362,6 +371,7 @@ $(document).ready(function() {
 				`
 
 			}
+			$('#data_field').val('');
 			example_tags.innerHTML = html1;
 			hscode = [];
 		} else if ($(this).val() == 'hs4Or8') {
@@ -374,6 +384,7 @@ $(document).ready(function() {
 				`
 
 			}
+			$('#data_field').val('');
 			example_tags.innerHTML = html2;
 			hs4Or8_c = [];
 		} else {
@@ -439,7 +450,8 @@ $(document).ready(function() {
 	function search_data() {
 
 		var inputBox = document.getElementById('data_field');
-		this.value == 'hSCode' || this.value == 'hs4Or8' ? inputBox.type = 'text' : inputBox.type = 'text';
+		this.value == 'hSCode' || this.value == 'hs4Or8' ? inputBox.type = 'number' : inputBox.type = 'text';
+
 	}
 	document.getElementById('product_data').addEventListener('change', search_data);
 
@@ -674,11 +686,11 @@ $(document).ready(function() {
 						data: data,
 						columns: [
 						{
-							data: 'id',
-							render: function (data, type, row, meta) {
-								return meta.row + meta.settings._iDisplayStart + 1;
-							}
-
+							// data: 'id',
+							// render: function (data, type, row, meta) {
+							// 	return meta.row + meta.settings._iDisplayStart + 1;
+							// }
+							data: 'id'
 						},
 						{
 							data: 'data_type'
@@ -783,33 +795,44 @@ $(document).ready(function() {
 		});
 	});
 </script>
-<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script>
+function rtrim(str){
+    return str.replace(/\s+$/, '');
+}
+
 	var path = "{{ route('autocomplete') }}";	
 	$( "#data_field" ).autocomplete({
 		source: function( request, response ) {
-			$.ajax({
-				url: path,
-				type: 'GET',
-				dataType: "json",
-				data: {
-					search: request.term
-				},
-				success: function( data ) {
-					response( data );
-				}
-			});
+			request.term = request.term.trim();
+			if(request.term == ""){
+          //when empty, returns empty result
+				response([]);
+			}else{
+				$.ajax({
+					url: path,
+					type: 'GET',
+					dataType: "json",
+					data: {
+						search: request.term
+					},
+					success: function(data) {
+							response(data);	
+
+					}
+				});
+			}
 		},
-		select: function (event, ui) {
-			$('#data_field').val(ui.item.label);
-			console.log(ui.item); 
-			return false;
-		}
-	});
+			select: function (event, ui) {
+				$('#data_field').val();
+				
+				return false;
+			}
+		});
 
-</script>
+	</script>
 
-@endsection
+	@endsection
