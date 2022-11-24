@@ -14,8 +14,7 @@ class SearchController extends Controller
   {
 
     $data = $request->export_type;
-
-    $category_ids = collect($data)
+    $export_type = collect($data)
     ->map(fn($i) => trim($i))
     ->all();
 
@@ -24,9 +23,10 @@ class SearchController extends Controller
      // DB::enableQueryLog();
 
     $data = ExportIndia::where(fn($query) => 
-      $query->whereIn('consignment_type', $category_ids)
-    )->take(20)->get();
+      $query->whereIn('consignment_type', $export_type)
+    )->get();
 
+    // $data = $data->toArray()['data'];
      // print_r($data);
     // die();
 
