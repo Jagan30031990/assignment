@@ -9,4 +9,8 @@ class ExportIndia extends Model
 {
     use HasFactory;
     protected $table="mst_export_india";
+    public function country()
+    {
+        return $this->hasOne('country');
+    }
 }
