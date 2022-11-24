@@ -390,7 +390,7 @@ $(document).ready(function() {
 		} else {
 			$('.tag_example').removeClass('active')
 		}
-		console.log($(this).val())
+		// console.log($(this).val())
 	});
 
 	$(document).ready(function(){
@@ -677,8 +677,12 @@ $(document).ready(function() {
 					$(".filter_data").addClass("show");
 					$(".advanced-search").show();						
 					$('#example1').DataTable({
+
 						destroy: true,
 						processing: true,
+						pageLength: 20,
+						serverSide: true,
+						// pageLength: 50,
 						scrollY: 450,
 						scrollX: true,
 						scrollCollapse: true,
@@ -686,11 +690,11 @@ $(document).ready(function() {
 						data: data,
 						columns: [
 						{
-							// data: 'id',
-							// render: function (data, type, row, meta) {
-							// 	return meta.row + meta.settings._iDisplayStart + 1;
-							// }
-							data: 'id'
+							data: 'id',
+							render: function (data, type, row, meta) {
+								return meta.row + meta.settings._iDisplayStart + 1;
+							}
+							
 						},
 						{
 							data: 'data_type'
@@ -827,12 +831,13 @@ function rtrim(str){
 			}
 		},
 			select: function (event, ui) {
-				$('#data_field').val();
+				console.log(event);
+				// console.log(ui.item.label);
+				$('.search_p').val();
+				// $('.search_p').val(ui.item.label);
 				
 				return false;
 			}
 		});
-
 	</script>
-
 	@endsection
