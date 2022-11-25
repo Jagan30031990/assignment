@@ -11,121 +11,82 @@ use Illuminate\Http\Request;
 class SearchController extends Controller
 {
   public function serach_data(Request $request)
-  {
+  { 
+    session()->forget('words_key');
+    $export_type = $request->export_type;
+    $country_select = $request->country_select;
+    $hs_code = $request->hs_code;
+    $year = $request->year; 
+    $data_search_value = Session::get('words_key');  
+    if(is_numeric($data_search_value))
+    {
+      $query=DB::table('mst_export_india')->where('hs_code', $data_search_value);
+      if(!empty($export_type)){      
+        $export_type = collect($export_type)
+        ->map(fn($i) => trim($i))
+        ->all();
+        $query->whereIn('consignment_type', $export_type);
+      }
 
-    $data = $request->export_type;
-    $export_type = collect($data)
-    ->map(fn($i) => trim($i))
-    ->all();
+      if(!empty($country_select)){      
+        $country_select = collect($country_select)
+        ->map(fn($i) => trim($i))
+        ->all();
+        $query->whereIn('country', $country_select);
+      }
 
+      if(!empty($hs_code)){      
+        $hs_code = collect($hs_code)
+        ->map(fn($i) => trim($i))
+        ->all();
+        $query->whereIn('hs_code', $hs_code);
+      }
 
+      if(!empty($year)){      
+        $year = collect($year)
+        ->map(fn($i) => trim($i))
+        ->all();
+        $query->whereIn('consignment_period', $year);
+      }
 
-     // DB::enableQueryLog();
+    }else{
+      $query=DB::table('mst_export_india')->where(function($query) use ($data_search_value)
+      {
+        foreach ($data_search_value as $term) {
+          $query->orWhere('product_description', 'like', '%' . $term . '%');
+        }
+      });
+      if(!empty($export_type)){      
+        $export_type = collect($export_type)
+        ->map(fn($i) => trim($i))
+        ->all();
+        $query->whereIn('consignment_type', $export_type);
+      }
 
-    $data = ExportIndia::where(fn($query) => 
-      $query->whereIn('consignment_type', $export_type)
-    )->get();
+      if(!empty($country_select)){      
+        $country_select = collect($country_select)
+        ->map(fn($i) => trim($i))
+        ->all();
+        $query->whereIn('country', $country_select);
+      }
 
-    // $data = $data->toArray()['data'];
-     // print_r($data);
-    // die();
+      if(!empty($hs_code)){      
+        $hs_code = collect($hs_code)
+        ->map(fn($i) => trim($i))
+        ->all();
+        $query->whereIn('hs_code', $hs_code);
+      }
 
-// return $data->get(); 
-// $query = DB::getQueryLog();
-//     print_r($query);
-//     die(); 
+      if(!empty($year)){      
+        $year = collect($year)
+        ->map(fn($i) => trim($i))
+        ->all();
+        $query->whereIn('consignment_period', $year);
+      }
+    }   
 
-return response()->json($data); 
+    $result = $query->get();
+    return response()->json($result);
 
-
-    // print_r($data);
-    // die();
-
-    
-
-
-
-//         $data_search_value = Session::get('words_key');
-//         $data = ExportIndia::query();
-//         if(is_numeric($data_search_value))
-//         {          
-//          $data->where('hs_code', $data_search_value);
-
-//          if(!is_null($request->export_type)) {
-//            $data = $request->export_type;
-//            foreach($data as $get_data)
-//            {
-//             $data->where("consignment_type", $get_data);
-//         }
-
-//     }
-
-//     if (!is_null($request->country_select)) {
-//         $data = $request->country_select;
-//         foreach($data as $get_data)
-//         {
-//          $data->where("country", $get_data);
-//      }
-
-//  }
-
-//  if (!is_null($request->hs_code)) {     
-//   $data = $request->hs_code;
-//   foreach($data as $get_data)
-//   {
-//     $data->where("hs_code", $request->get_data);
-// }
-// }
-// if (!is_null($request->year)) {
-//   $data = $request->year;
-//   foreach($data as $get_data)
-//   {
-//     $data->where("consignment_period", $data);
-// }
-// }
-// }else
-// {
-    
-//     $data->where('product_description','LIKE',$data_search_value.'%');
-
-//     if(!is_null($request->export_type)) {
-//        $get_data = $request->export_type;
-//        foreach($get_data as $get_data)
-//        {
-//         $data->where("consignment_type", $get_data);
-//     }
-
-// }
-
-// if (!is_null($request->country_select)) {
-//     $get_data = $request->country_select;
-//     foreach($get_data as $get_data)
-//     {
-//      $data->where("country", $get_data);
-//  }
-
-// }
-
-// if (!is_null($request->hs_code)) {     
-//   $get_data = $request->hs_code;
-//   foreach($get_data as $get_data)
-//   {
-//     $data->where("hs_code", $request->get_data);
-// }
-// }
-// if (!is_null($request->year)) {
-//   $get_data = $request->year;
-//   foreach($get_data as $get_data)
-//   {
-//     $data->where("consignment_period", $get_data);
-// }
-
-// }   
-//  dd(DB::getQueryLog()); 
-// return $data->get();  
-
-// return response()->json($data); 
-// }
-// }
   }
 }

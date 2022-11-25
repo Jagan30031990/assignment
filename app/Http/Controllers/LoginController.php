@@ -18,50 +18,96 @@ class LoginController extends Controller
         return view('authentication.sign_in');
     }
     public function home_page(Request $request)
-    {       
-
-        return view('index');
-    }
-    public function autocomplete(Request $request)
     {
-        $data_check = $request->search;
-        $dataModified = array();
-        if(is_numeric($data_check))
-        {   
-            $datas = HSCode::select('product_name','hs_code')
-            ->where('hs_code', $data_check)->take(300)->get(); 
-            foreach ($datas as $data)
-            {
-                $dataModified[] = '(HS-CODE'.'-'.$data->hs_code.') '.$data->product_name;
-            }        
-        }
-        else
+
+        
+        $data_search_value = Session::get('words_key');
+        if(is_numeric($data_search_value))
         {
-            $datas = HSCode::select('product_name')
-            ->where('product_name','LIKE','%'.$data_check.'%')->take(300)->get();     
-            foreach ($datas as $data)
-            {
-                $dataModified[] = $data->product_name;
-            }        
+
+         $hs_code = DB::table('mst_export_india')
+         ->select('hs_code')
+         ->where('hs_code',$data_search_value)
+         ->groupBy('hs_code')
+         ->get();
+     } 
+     else
+     {
+       $hs_code = ExportIndia::query()
+       ->where(function ($query) use ($data_search_value) {
+        foreach ($data_search_value as $term) {
+            $query->orWhere('product_description', 'like', '%' . $term . '%');
         }
+    })->take(2000)->get();
 
-        return response()->json($dataModified);
+   }
+   $country = DB::table('mst_export_india')
+   ->select('country')
+   ->groupBy('country')
+   ->take(270)
+   ->get();
 
-    }
-    public function filter_data(Request $request)
-    {
-       $words = $request->search_data;
-       $stripped = str_replace(array(',','.', '"'), '', $words);
-       $values = explode(" ", $stripped);
-       session(['words_key' => $words ]);
-       if(is_numeric($words))
-       {
-        $data = ExportIndia::where('hs_code',$words)->take(2000)->get();
-        return response()->json($data);                
+   $year = DB::table('mst_export_india')
+   ->select('consignment_period')
+   ->groupBy('consignment_period')
+   ->take(270)
+   ->get();
+   return view('index',compact('country','hs_code','year'));
+}
+public function autocomplete(Request $request)
+{
+    $data_check = $request->search;
+    $dataModified = array();
+    if(is_numeric($data_check))
+    {   
+        $datas = HSCode::select('product_name','hs_code')
+        ->where('hs_code', $data_check)->take(300)->get(); 
+        foreach ($datas as $data)
+        {
+            $dataModified[] = array(
 
+                "label" =>'(HS-CODE'.'-'.$data->hs_code.') '.$data->product_name,
+                "value" => $data->hs_code,
+                "dropdown_type" => $request->type,
+            );
+
+        }        
     }
     else
     {
+        $datas = HSCode::select('product_name')
+        ->where('product_name','LIKE','%'.$data_check.'%')->take(300)->get();     
+        foreach ($datas as $data)
+        {
+            $dataModified[] = $data->product_name;
+        }        
+    }
+
+    return response()->json($dataModified);
+
+}
+public function filter_data(Request $request)
+{
+   $words = $request->search_data;
+   if(is_numeric($words))
+   {        
+    session(['words_key' => $words ]);
+}
+else
+{
+    $stripped = str_replace(array(',','.', '"'), '', $words);
+    $values = explode(" ", $stripped);
+    session(['words_key' => $values ]);
+}
+
+if(is_numeric($words))
+{
+    $data = ExportIndia::where('hs_code',$words)->take(2000)->get();
+    return response()->json($data);                
+
+}
+else
+{
         // DB::enableQueryLog();
 
     $data = ExportIndia::query()
@@ -72,19 +118,11 @@ class LoginController extends Controller
         }
     })->take(2000)->get();
 
+    return response()->json($data);                
+}
 
-        // $data = ExportIndia::where('product_description','LIKE' , $values.'%')->get();
-        // die($data);
-//        $query = DB::getQueryLog();
-
-// print_r($query);
-// die();
-        
-        return response()->json($data);                
-    }
-
-    $count_of_data = ExportIndia::count();
-    return view('index', compact('count_of_data'));
+$count_of_data = ExportIndia::count();
+return view('index', compact('count_of_data'));
 }
 public function refresh_captcha()
 {
