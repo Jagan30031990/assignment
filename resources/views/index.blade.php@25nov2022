@@ -104,32 +104,28 @@
 									<!--begin::Select-->
 									<select class="country_select input_padding_common_tow form-select multiselect_class" name="country_select[]" multiple="multiple">
 
-										<option value="" data-badge="">select</option>
-										@foreach($country as $country)
-										<option value="{{$country->country}}" data-badge="">{{$country->	country}}</option>
-										@endforeach
-									</select>
-									<!--end::Col-->
-								</div>
-								<div class="col-lg-3 col-md-3 col-sm-4">
-									<!--begin::Select-->
-									<select class="hscode form-select input_padding_common_tow multiselect_class" multiple="multiple" name="hs_code[]">
-										<option value="" data-badge="">select</option>
-										@foreach($hs_code as $hs_code)
-										<option value="{{$hs_code->hs_code}}" data-badge="">{{$hs_code->	hs_code}}</option>
-										@endforeach
+										<option value="India" data-badge="">India</option>
+										<option value="USA" data-badge="">USA</option>
 
 									</select>
 									<!--end::Col-->
 								</div>
 								<div class="col-lg-3 col-md-3 col-sm-4">
 									<!--begin::Select-->
-									<select class="year_select form-select input_padding_common_tow multiselect_class" multiple="multiple" name="year[]">
+									<select class="hscode form-select input_padding_common_tow multiselect_class" multiple="multiple" name="hs_code">
 
-										<option value="" data-badge="">select</option>
-										@foreach($year as $year)
-										<option value="{{$year->consignment_period}}" data-badge="">{{$year->consignment_period}}</option>
-										@endforeach
+										<option value="O1" data-badge="">25</option>
+										<option value="O2" data-badge="">45</option>
+
+									</select>
+									<!--end::Col-->
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-4">
+									<!--begin::Select-->
+									<select class="year_select form-select input_padding_common_tow multiselect_class" multiple="multiple" name="year">
+
+										<option value="O1" data-badge="">2022</option>
+										<option value="O2" data-badge="">2021</option>
 
 									</select>
 									<!--end::Col-->
@@ -325,7 +321,7 @@ $(document).ready(function() {
 				$(this).val("");
 			}
 		} else if(dropdown === "hs4Or8") {
-			if(inputValue.length > 8)
+		   if(inputValue.length > 8)
 			{
 				toastr.error('Please enter only 4,6,8 digit HS CODE!!');
 				$(this).val("");
@@ -376,7 +372,6 @@ $(document).ready(function() {
 
 			}
 			$('#data_field').val('');
-			sessionStorage.removeItem('words_key');	
 			example_tags.innerHTML = html1;
 			hscode = [];
 		} else if ($(this).val() == 'hs4Or8') {
@@ -390,13 +385,12 @@ $(document).ready(function() {
 
 			}
 			$('#data_field').val('');
-
 			example_tags.innerHTML = html2;
 			hs4Or8_c = [];
 		} else {
 			$('.tag_example').removeClass('active')
 		}
-		console.log($(this).val())
+		// console.log($(this).val())
 	});
 
 	$(document).ready(function(){
@@ -473,8 +467,7 @@ $(document).ready(function() {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 <script>
 	$('#kt_ecommerce_sales_flatpickr_clear_tags').click(function() {
-		window.location.reload();	
-		sessionStorage.removeItem('words_key');	
+		window.location.reload();		
 	});
 
 </script>
@@ -673,8 +666,7 @@ $(document).ready(function() {
 						"data": [],
 						"total": 0,
 						"recordsTotal": 0,
-						"recordsFiltered": 0,
-						"lengthMenu": [[50,100], [50,100]],
+						"recordsFiltered": 0
 						
 					});				
 				}
@@ -685,8 +677,12 @@ $(document).ready(function() {
 					$(".filter_data").addClass("show");
 					$(".advanced-search").show();						
 					$('#example1').DataTable({
+
 						destroy: true,
 						processing: true,
+						pageLength: 20,
+						serverSide: true,
+						// pageLength: 50,
 						scrollY: 450,
 						scrollX: true,
 						scrollCollapse: true,
@@ -698,7 +694,7 @@ $(document).ready(function() {
 							render: function (data, type, row, meta) {
 								return meta.row + meta.settings._iDisplayStart + 1;
 							}
-							// data: 'id'
+							
 						},
 						{
 							data: 'data_type'
@@ -808,12 +804,16 @@ $(document).ready(function() {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script>
+function rtrim(str){
+    return str.replace(/\s+$/, '');
+}
+
 	var path = "{{ route('autocomplete') }}";	
 	$( "#data_field" ).autocomplete({
 		source: function( request, response ) {
-			var dropdown = $('#product_data').val();
 			request.term = request.term.trim();
 			if(request.term == ""){
+          //when empty, returns empty result
 				response([]);
 			}else{
 				$.ajax({
@@ -821,36 +821,23 @@ $(document).ready(function() {
 					type: 'GET',
 					dataType: "json",
 					data: {
-						search: request.term,
-						type : dropdown
+						search: request.term
 					},
 					success: function(data) {
-						// console.log(data);
-						response(data);	
+							response(data);	
 
 					}
 				});
 			}
 		},
-		select: function (event, ui) {
-			if(ui.item.dropdown_type=="hSCode")
-			{
-				event.preventDefault();
-				$('#data_field').val(ui.item.value);
+			select: function (event, ui) {
+				console.log(event);
+				// console.log(ui.item.label);
+				$('.search_p').val();
+				// $('.search_p').val(ui.item.label);
+				
+				return false;
 			}
-			else if(ui.item.dropdown_type=="hs4Or8")
-			{
-				event.preventDefault();
-				$('#data_field').val(ui.item.value);
-			}
-			else
-			{
-				$('#data_field').val(ui.item.label);
-			}
-			
-		}
-	});
-
-</script>
-
-@endsection
+		});
+	</script>
+	@endsection
