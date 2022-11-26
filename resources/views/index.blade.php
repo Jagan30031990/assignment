@@ -102,34 +102,31 @@
 								<!--begin::Col-->
 								<div class="col-lg-3 col-md-3 col-sm-4">
 									<!--begin::Select-->
-									<select class="country_select input_padding_common_tow form-select multiselect_class" name="country_select[]" multiple="multiple">
+									<select class="country_select input_padding_common_tow form-select multiselect_class" id="country" name="country_select[]" multiple="multiple">
 
 										<option value="" data-badge="">select</option>
-										@foreach($country as $country)
-										<option value="{{$country->country}}" data-badge="">{{$country->	country}}</option>
-										@endforeach
+										
 									</select>
 									<!--end::Col-->
 								</div>
 								<div class="col-lg-3 col-md-3 col-sm-4">
 									<!--begin::Select-->
-									<select class="hscode form-select input_padding_common_tow multiselect_class" multiple="multiple" name="hs_code[]">
+									<select class="hscode form-select input_padding_common_tow multiselect_class" id="hs_code" multiple="multiple" name="hs_code[]">
 										<option value="" data-badge="">select</option>
-										@foreach($hs_code as $hs_code)
-										<option value="{{$hs_code->hs_code}}" data-badge="">{{$hs_code->	hs_code}}</option>
-										@endforeach
+										
+										<option value="" data-badge="">select</option>
+										
 
 									</select>
 									<!--end::Col-->
 								</div>
 								<div class="col-lg-3 col-md-3 col-sm-4">
 									<!--begin::Select-->
-									<select class="year_select form-select input_padding_common_tow multiselect_class" multiple="multiple" name="year[]">
+									<select class="year_select form-select input_padding_common_tow multiselect_class" id="year" multiple="multiple" name="year[]">
 
-										<option value="" data-badge="">select</option>
-										@foreach($year as $year)
-										<option value="{{$year->consignment_period}}" data-badge="">{{$year->consignment_period}}</option>
-										@endforeach
+										<option value="" data-badge="">select</option>									
+										
+										
 
 									</select>
 									<!--end::Col-->
@@ -511,7 +508,7 @@ $(document).ready(function() {
 					datatype: 'json',
 					data: $('#ajax-contact-form').serialize(),					
 					success: function(data) {
-						console.log(data);
+						console.log(data.search_data);
 						if(data=='')
 						{
 							$("#loader").hide();
@@ -521,10 +518,29 @@ $(document).ready(function() {
 						}
 						else
 						{
+							var html = '';
+							var html_hs_code = '';
+							var html_year = '';
+							$.each(data.country, function (i, value) {
+								html += ('<option value="' + value.country + '">' + value.country + '</option>');
+
+							});							
+							$("#country").html(html);
+							$.each(data.hs_code, function (i, value) {
+								html_hs_code += ('<option value="' + value.hs_code + '">' + value.hs_code + '</option>');
+
+							});							
+							$("#hs_code").html(html_hs_code);
+							$.each(data.year, function (i, value) {
+								html_year += ('<option value="' + value.consignment_period + '">' + value.consignment_period + '</option>');
+
+							});							
+							$("#year").html(html_year);
 							$("#loader").hide();
 							$(".import-data-table").addClass("active");
 							$(".filter_data").addClass("show");
-							$(".advanced-search").show();						
+							$(".advanced-search").show();
+							// console.log(data);						
 							$('#example1').DataTable({
 								destroy: true,
 								processing: true,
@@ -533,10 +549,11 @@ $(document).ready(function() {
 								scrollX: true,
 								scrollCollapse: true,
 								lengthMenu: [[50,100], [50,100]],
-								data: data,
+								data: data.search_data,
 								columns: [
 								{
 									data: 'id',
+
 									render: function (data, type, row, meta) {
 										return meta.row + meta.settings._iDisplayStart + 1;
 									}
@@ -544,6 +561,7 @@ $(document).ready(function() {
 								},
 								{
 									data: 'data_type'
+									
 								},
 								{
 									data: 'country'
@@ -635,8 +653,7 @@ $(document).ready(function() {
 								},
 								{
 									data: 'exporter_name'
-								},                       
-								]
+								}]
 							});				
 						}
 

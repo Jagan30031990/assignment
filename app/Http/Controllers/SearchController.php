@@ -12,12 +12,14 @@ class SearchController extends Controller
 {
   public function serach_data(Request $request)
   { 
-    session()->forget('words_key');
+    
     $export_type = $request->export_type;
     $country_select = $request->country_select;
     $hs_code = $request->hs_code;
     $year = $request->year; 
     $data_search_value = Session::get('words_key');  
+   
+
     if(is_numeric($data_search_value))
     {
       $query=DB::table('mst_export_india')->where('hs_code', $data_search_value);
@@ -87,6 +89,6 @@ class SearchController extends Controller
 
     $result = $query->get();
     return response()->json($result);
-
+   
   }
 }
