@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers;
-
+ini_set('MAX_EXECUTION_TIME', 3600);
 use Auth;
 use DB;
 use Captcha;
@@ -20,110 +20,97 @@ class LoginController extends Controller
     public function home_page(Request $request)
     {
 
-        
-        $data_search_value = Session::get('words_key');
-        if(is_numeric($data_search_value))
-        {
-
-         $hs_code = DB::table('mst_export_india')
-         ->select('hs_code')
-         ->where('hs_code',$data_search_value)
-         ->groupBy('hs_code')
-         ->get();
-     } 
-     else
-     {
-       $hs_code = ExportIndia::query()
-       ->where(function ($query) use ($data_search_value) {
-        foreach ($data_search_value as $term) {
-            $query->orWhere('product_description', 'like', '%' . $term . '%');
-        }
-    })->take(2000)->get();
-
-   }
-   $country = DB::table('mst_export_india')
-   ->select('country')
-   ->groupBy('country')
-   ->take(270)
-   ->get();
-
-   $year = DB::table('mst_export_india')
-   ->select('consignment_period')
-   ->groupBy('consignment_period')
-   ->take(270)
-   ->get();
-   return view('index',compact('country','hs_code','year'));
-}
-public function autocomplete(Request $request)
-{
-    $data_check = $request->search;
-    $dataModified = array();
-    if(is_numeric($data_check))
-    {   
-        $datas = HSCode::select('product_name','hs_code')
-        ->where('hs_code', $data_check)->take(300)->get(); 
-        foreach ($datas as $data)
-        {
-            $dataModified[] = array(
-
-                "label" =>'(HS-CODE'.'-'.$data->hs_code.') '.$data->product_name,
-                "value" => $data->hs_code,
-                "dropdown_type" => $request->type,
-            );
-
-        }        
+        return view('index');
     }
-    else
+    public function autocomplete(Request $request)
     {
-        $datas = HSCode::select('product_name')
-        ->where('product_name','LIKE','%'.$data_check.'%')->take(300)->get();     
-        foreach ($datas as $data)
-        {
-            $dataModified[] = $data->product_name;
-        }        
-    }
+        $data_check = $request->search;
+        $dataModified = array();
+        if(is_numeric($data_check))
+        {   
+            $datas = HSCode::select('product_name','hs_code')
+            ->where('hs_code', $data_check)->take(300)->get(); 
+            foreach ($datas as $data)
+            {
+                $dataModified[] = array(
 
-    return response()->json($dataModified);
+                    "label" =>'(HS-CODE'.'-'.$data->hs_code.') '.$data->product_name,
+                    "value" => $data->hs_code,
+                    "dropdown_type" => $request->type,
+                );
 
-}
-public function filter_data(Request $request)
-{
-   $words = $request->search_data;
-   if(is_numeric($words))
-   {        
-    session(['words_key' => $words ]);
-}
-else
-{
-    $stripped = str_replace(array(',','.', '"'), '', $words);
-    $values = explode(" ", $stripped);
-    session(['words_key' => $values ]);
-}
-
-if(is_numeric($words))
-{
-    $data = ExportIndia::where('hs_code',$words)->take(2000)->get();
-    return response()->json($data);                
-
-}
-else
-{
-        // DB::enableQueryLog();
-
-    $data = ExportIndia::query()
-    ->where(function ($query) use ($values) {
-        foreach ($values as $term) {
-            // Loop over the terms and do a search for each.
-            $query->orWhere('product_description', 'like', '%' . $term . '%');
+            }        
         }
-    })->take(2000)->get();
+        else
+        {
+            $datas = HSCode::select('product_name')
+            ->where('product_name','LIKE','%'.$data_check.'%')->take(300)->get();     
+            foreach ($datas as $data)
+            {
+                $dataModified[] = $data->product_name;
+            }        
+        }
 
-    return response()->json($data);                
+        return response()->json($dataModified);
+
+    }
+    public function filter_data(Request $request)
+    {
+        $words = $request->search_data;
+        if(is_numeric($words))
+        {
+             
+            Session::put('words_key', $words);
+            $data = ExportIndia::where('hs_code',$words)->get();
+            $country =  ExportIndia::select('country')->where('hs_code',$words)->groupBy('country')->get();
+
+            $hs_code =  ExportIndia::select('hs_code')->where('hs_code',$words)->groupBy('hs_code')->get();
+            $year =  ExportIndia::select('consignment_period')->where('hs_code',$words)->groupBy('consignment_period')->get();
+        }
+        else
+        {
+            $stripped = str_replace(array(',','.', '"'), '', $words);
+            $values = explode(" ", $stripped);
+             Session::put('words_key', $values);
+            // DB::enableQueryLog();
+            $data = ExportIndia::query()
+            ->where(function ($query) use ($values) {
+                foreach ($values as $term) {
+
+                    $query->orWhere('product_description', 'like', '%' . $term . '%');
+                }
+            })->take(2000)->get();        
+           
+             $country =  ExportIndia::query()
+             ->where(function ($query) use ($values) {
+                foreach ($values as $term) {
+
+                    $query->orWhere('product_description', 'like', '%' . $term . '%');
+                }
+            })->select('country')->groupBy('country')->take(2000)->get();
+       
+      
+            $hs_code =  ExportIndia::query()
+            ->where(function ($query) use ($values) {
+                foreach ($values as $term) {
+
+                    $query->orWhere('product_description', 'like', '%' . $term . '%');
+                }
+            })->select('hs_code')->groupBy('hs_code')->take(2000)->get();
+        
+        
+           $year =  ExportIndia::query()
+           ->where(function ($query) use ($values) {
+            foreach ($values as $term) {
+
+                $query->orWhere('product_description', 'like', '%' . $term . '%');
+            }
+        })->select('consignment_period')->groupBy('consignment_period')->take(2000)->get();      
+       
+   }
+   return response()->json(['search_data'=>$data,'country'=>$country,'hs_code'=>$hs_code,'year'=>$year]);
 }
 
-$count_of_data = ExportIndia::count();
-return view('index', compact('count_of_data'));
-}
 public function refresh_captcha()
 {
 
