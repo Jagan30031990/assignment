@@ -51,7 +51,10 @@ Route::post('/update', [UserDataController::class, 'update'])->name('update.prof
 
 Route::post('/email_verify', [UserDataController::class, 'email_verification'])->name('profile.email.verify');
 
-Route::get('account/verify/{token}', [UserDataController::class, 'verifyAccount'])->name('user.verify'); 
+Route::get('account/verify/{token}', [UserDataController::class, 'verifyAccount'])->name('user.verify');
+
+
+Route::get('/verification_email', [UserDataController::class, 'index'])->name('user.verification.template'); 
 
 
 
