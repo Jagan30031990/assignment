@@ -8,6 +8,7 @@ use Session;
 use DataTables;
 use App\Models\ExportIndia;
 use App\Models\HSCode;
+use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 
@@ -19,8 +20,9 @@ class LoginController extends Controller
     }
     public function home_page(Request $request)
     {
-
-        return view('index');
+         $id = Auth::user()->id;
+         $user_data = User::where('id',$id)->get();
+         return view('index',compact('user_data'));
     }
     public function autocomplete(Request $request)
     {
@@ -59,7 +61,7 @@ class LoginController extends Controller
         $words = $request->search_data;
         if(is_numeric($words))
         {
-             
+
             Session::put('words_key', $words);
             $data = ExportIndia::where('hs_code',$words)->get();
             $country =  ExportIndia::select('country')->where('hs_code',$words)->groupBy('country')->get();
@@ -71,7 +73,7 @@ class LoginController extends Controller
         {
             $stripped = str_replace(array(',','.', '"'), '', $words);
             $values = explode(" ", $stripped);
-             Session::put('words_key', $values);
+            Session::put('words_key', $values);
             // DB::enableQueryLog();
             $data = ExportIndia::query()
             ->where(function ($query) use ($values) {
@@ -80,16 +82,16 @@ class LoginController extends Controller
                     $query->orWhere('product_description', 'like', '%' . $term . '%');
                 }
             })->take(2000)->get();        
-           
-             $country =  ExportIndia::query()
-             ->where(function ($query) use ($values) {
+
+            $country =  ExportIndia::query()
+            ->where(function ($query) use ($values) {
                 foreach ($values as $term) {
 
                     $query->orWhere('product_description', 'like', '%' . $term . '%');
                 }
             })->select('country')->groupBy('country')->take(2000)->get();
-       
-      
+
+
             $hs_code =  ExportIndia::query()
             ->where(function ($query) use ($values) {
                 foreach ($values as $term) {
@@ -97,66 +99,69 @@ class LoginController extends Controller
                     $query->orWhere('product_description', 'like', '%' . $term . '%');
                 }
             })->select('hs_code')->groupBy('hs_code')->take(2000)->get();
-        
-        
-           $year =  ExportIndia::query()
-           ->where(function ($query) use ($values) {
-            foreach ($values as $term) {
 
-                $query->orWhere('product_description', 'like', '%' . $term . '%');
-            }
-        })->select('consignment_period')->groupBy('consignment_period')->take(2000)->get();      
-       
-   }
-   return response()->json(['search_data'=>$data,'country'=>$country,'hs_code'=>$hs_code,'year'=>$year]);
-}
 
-public function refresh_captcha()
-{
+            $year =  ExportIndia::query()
+            ->where(function ($query) use ($values) {
+                foreach ($values as $term) {
 
-    return response()->json([
-        'captcha' => Captcha::img()
-    ]);
-}
-public function chklogin(Request $request)
-{
+                    $query->orWhere('product_description', 'like', '%' . $term . '%');
+                }
+            })->select('consignment_period')->groupBy('consignment_period')->take(2000)->get();      
 
-    $this->validate($request, [
-        'email' => 'required|email',
-        'password' => 'required|alphaNum|min:3'
-    ]);
-
-    $user_data = array(
-        'email' => $request->get('email'),
-        'password' => $request->get('password')
-    );
-
-    if (Auth::attempt($user_data)) {
-        Toastr::success('Successfully Login');
-        return response()->json(['success' => true]);
-    } else {
-        return response()->json(['success' => false]);
+        }
+        return response()->json(['search_data'=>$data,'country'=>$country,'hs_code'=>$hs_code,'year'=>$year]);
     }
-}
-public function morePosts()
-{
-    $export_india = ExportIndia::paginate(50);
-    return response()->json($export_india);
-}
 
-public function export_india()
-{
-    $export_india = ExportIndia::paginate(100);
-    return view('index', compact('export_india'));
-}
+    public function refresh_captcha()
+    {
 
-function logout()
-{
-    Auth::logout();
-    return redirect('/');
-}
-public function dashboard(Request $request)
-{
-    return view('dashboard');
-}
+        return response()->json([
+            'captcha' => Captcha::img()
+        ]);
+    }
+    public function chklogin(Request $request)
+    {
+
+        $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required|alphaNum|min:3'
+        ]);
+
+        $user_data = array(
+            'email' => $request->get('email'),
+            'password' => $request->get('password')
+        );
+
+        if (Auth::attempt($user_data) && Auth()->user()->is_admin == 0) {
+            Toastr::success('Successfully Login User');
+            return response()->json(['success' => true]);
+        } else if(Auth::attempt($user_data) && Auth()->user()->is_admin == 1){
+            Toastr::success('Successfully Login Admin');
+            return response()->json(['success' => true]);
+        }else {
+            return response()->json(['success' => false]);
+        }
+    }
+    public function morePosts()
+    {
+        $export_india = ExportIndia::paginate(50);
+        return response()->json($export_india);
+    }
+
+    public function export_india()
+    {
+        $export_india = ExportIndia::paginate(100);
+        return view('index', compact('export_india'));
+    }
+
+    function logout()
+    {
+        Auth::logout();
+        return redirect('/');
+    }
+    public function dashboard(Request $request)
+    {
+        return view('dashboard');
+    }
 }
