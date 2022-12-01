@@ -14,6 +14,10 @@ use Illuminate\Http\Request;
 
 class UserDataController extends Controller
 {
+    public function index()
+    {
+        return view('verification');
+    }
     public function get_profile(Request $request)
     {
         $id = Auth::user()->id;
@@ -68,19 +72,11 @@ class UserDataController extends Controller
 
    public function email_verification(Request $request)
    {
-
     $token = Str::random(64);  
     $user_id = $request->user_id;
-    $user = User::find($user_id);
-    if($user)
-    {
-
-        $user->remember_token  = $token; 
-        $user->save();
-
-    }
-          
-
+    $user = User::find($user_id);    
+    $user->remember_token  = $token; 
+    $user->save();
     Mail::send('emailVerificationEmail', ['token' => $token], function($message) use($request){
         $user_data = $request->user_id;
         $user_data = User::where('id',$user_data)->first();
@@ -91,26 +87,25 @@ class UserDataController extends Controller
     return response()->json(['success' => true]);
 
 }
-    public function verifyAccount($token)
-    {
+public function verifyAccount($token)
+{
 
-        $verifyUser = User::where('remember_token', $token)->first();
+    $verifyUser = User::where('remember_token', $token)->first();
 
-        $message = 'Sorry your email cannot be identified.';
-  
-        if(!is_null($verifyUser) ){
-            $user = $verifyUser->user;
-            
-            if($verifyUser->is_email_verified==0) {
-                $verifyUser->is_email_verified = 1;
-                $verifyUser->save();
-                $message = "Your e-mail is verified. You can now login.";
-            } else {
-                $message = "Your e-mail is already verified. You can now login.";
-            }
-            return redirect('/')->withErrors($message);
-           
+    $message = 'Sorry your email cannot be identified.';
+
+    if(!is_null($verifyUser)){
+        $user = $verifyUser->user;
+        if($verifyUser->is_email_verified==0) {
+            $verifyUser->is_email_verified = 1;
+            $verifyUser->save();
+            $message = "Your e-mail is verified. You can now login.";
+        } else {
+            $message = "Your e-mail is already verified. You can now login.";
         }
+        return redirect('verification_email')->withErrors($message);
+
+    }
 
 }
 }
