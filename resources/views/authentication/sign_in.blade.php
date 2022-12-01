@@ -27,12 +27,22 @@
 <div class="d-flex flex-column position-xl-fixed top-0 bottom-0 w-lg-700px scroll-y">
 <!--begin::Content-->
 <div class="d-flex flex-column text-center p-10 pt-lg-20">
+	@if ($errors->any())
+     @foreach ($errors->all() as $error)
+           <div class="alert alert-danger" role="alert">
+                 {{ $error }}
+           </div>
+    @endforeach
+@endif
 	<!--begin::Logo-->
 	<a href="#" class="py-9 mb-5">
 		<img alt="Logo" src="{{asset('assets/images/logo-8-light.png')}}" class="h-60px" />
 	</a>
 	<!--end::Logo-->
 	<!--begin::Title-->
+	
+    
+
 	<h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #fff;">Welcome to Exim Pulse</h1>
 	<!--end::Title-->
 	<!--begin::Description-->

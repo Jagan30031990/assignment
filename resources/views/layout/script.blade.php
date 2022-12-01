@@ -26,7 +26,7 @@
 <!--end::Page Vendors Javascript-->
 <!--toaster js -->
  <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
-<script src="assets/js/custom/account/settings/signin-methods.js"></script>
+<script src="{{asset('assets/js/custom/account/settings/signin-methods.js')}}"></script>
  <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
  <!--toaster js end-->
  

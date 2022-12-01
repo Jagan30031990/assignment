@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
@@ -34,6 +34,7 @@ class SignupController extends Controller
            $register = new User;
            $register->name = $request->name;
            $register->email = $request->email;
+           $register->password = Hash::make($request->password);
            $register->mobile_no = $request->mobile;
            $register->is_admin = 0;
            $register->login_by = 0;        
