@@ -29,24 +29,22 @@
 <div class="d-flex flex-column text-center p-10 pt-lg-20">
 	
 	<!--begin::Logo-->
-	<a href="#" class="py-9 mb-5">
-		<img alt="Logo" src="{{asset('assets/images/logo-8-light.png')}}" class="h-60px" />
-	</a>
+	
 	<!--end::Logo-->
 	<!--begin::Title-->
 	
     
 
-	<h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #fff;">Welcome to Exim Pulse</h1>
+	
 	<!--end::Title-->
 	<!--begin::Description-->
-	<p class="fw-bold fs-2" style="color: #fff;">In this kind of post, the bloggerintroduces a person they’ve interviewed and provides some background information about the intervieweeand their work following this is a transcript of the interview.</p>
+	
 	<!--end::Description-->
 </div>
 
 <!--end::Content-->
 <!--begin::Illustration-->
-<div class="d-flex flex-row-auto bgi-no-repeat bgi-no-repeat-auth bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-200px" style="background-image: url('https://preview.keenthemes.com/metronic8/demo1/assets/media/auth/agency.png')"></div>
+
 <!--end::Illustration-->
 </div>
 <!--end::Wrapper-->
@@ -66,11 +64,10 @@
 		<!--begin::Heading-->
 		<div class="text-center mb-10">
 			<!--begin::Title-->
-			<h1 class="text-dark mb-3">Sign In to Exim Pluse</h1>
+			<h1 class="text-dark mb-3">Sign In</h1>
 			<!--end::Title-->
 			<!--begin::Link-->
-			<div class="text-gray-400 fw-bold fs-4">New Here?
-				<a href="{{route('authentication.sign_up')}}" class="link-primary fw-bolder">Create an Account</a></div>
+			
 				<!--end::Link-->
 			</div>
 			<!--begin::Heading-->
@@ -93,7 +90,7 @@
 					<label class="form-label fw-bolder text-dark fs-6 mb-0">Password</label>
 					<!--end::Label-->
 					<!--begin::Link-->
-					<a href="{{route('authentication.password_reset')}}" class="link-primary fs-6 fw-bolder">Forgot Password ?</a>
+					
 					<!--end::Link-->
 				</div>
 				<!--end::Wrapper-->
@@ -113,20 +110,10 @@
 					</button>
 					<!--end::Submit button-->
 					<!--begin::Separator-->
-					<div class="d-flex align-items-center mb-5">
-						<div class="border-bottom border-gray-300 mw-50 w-100"></div>
-						<span class="fw-bold text-gray-400 fs-7 mx-2">OR</span>
-						<div class="border-bottom border-gray-300 mw-50 w-100"></div>
-					</div>
+					
 					<!--end::Separator-->
 					<!--begin::Google link-->
-					<div class="media_ic_box">
-						<a href="{{ url('/google') }}" type="button" class="btn btn-light-primary fw-bolder mb-5">
-							<img alt="Logo" src="assets/media/svg/brand-logos/google-icon.svg" class="h-20px me-3" />Google</a>
-							<a href="#" type="button" class="btn btn-light-primary fw-bolder mb-5">
-								<img alt="Logo" src="assets/media/svg/brand-logos/facebook-3.svg" class="h-20px me-3" />Facebook</a>
-								
-								</div>
+					
 								<!--end::Google link-->
 							</div>
 							<!--end::Actions-->
@@ -202,7 +189,7 @@ $("#ajax-contact-form").validate({
 					$('#submit').html('Sign In');
 					return false;
 				}
-				else
+				else if($.trim(data['success']) =='admin')
 				{				
 					toastr.success('LogIn successfully');
 					$('#submit').html('...Redirecting...');	
@@ -211,7 +198,18 @@ $("#ajax-contact-form").validate({
 						$('#submit').html('Please Wait...redirecting');	
 						$("#submit"). attr("disabled", true);				
 						window.location.href = '/admin/home-page';
-					}, 5000);
+					}, 2000);
+				}
+				else
+				{
+					toastr.success('LogIn successfully');
+					$('#submit').html('...Redirecting...');	
+					$("#submit"). attr("disabled", true);
+					setTimeout(function () {	
+						$('#submit').html('Please Wait...redirecting');	
+						$("#submit"). attr("disabled", true);				
+						window.location.href = '/admin/home-page-user';
+					}, 2000);
 				}
 			}
 		});
